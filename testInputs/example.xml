@@ -1,0 +1,124 @@
+<?xml ?>
+<Data>
+    <Document>
+        <!-- 1 -->
+        <Title>
+            Petcha
+        </Title>
+        <!-- 1 -->
+        <Fields>
+            <!-- 1..* -->
+            <Field fieldId="1" type="RADIO_GROUP">
+                <!-- 1 -->
+                <Name>FieldName1</Name>
+                <!-- 2..* -->
+                <Value>Red</Value>
+                <Value>Blue</Value>
+            </Field>
+            <Field fieldId="2" type="TEXTFIELD">
+                <!-- 1 -->
+                <Name>FieldName2</Name>
+            </Field>
+            <Field fieldId="3" type="SPINNER">
+                <!-- 1 -->
+                <Name>FieldName2</Name>
+                <!-- 1 -->
+                <MinValue>0</MinValue>
+                <!-- 1 -->
+                <MaxValue>10</MaxValue>
+                <!-- 1 -->
+                <Step>2</Step>
+            </Field>
+            <Field fieldId="4" type="CHECK_GROUP">
+                <!-- 1 -->
+                <Name>FieldName3</Name>
+                <!-- 2..* -->
+                <Value>Male</Value>
+                <Value>Female</Value>
+            </Field>
+        </Fields>
+        <Actions>
+            <!-- 1..* -->
+            <Action actionId="1">
+                <!-- 1 -->
+                <Name>Save</Name>
+            </Action>
+            <Action actionId="2">
+                <!-- 1 -->
+                <Name>Submit</Name>
+            </Action>
+            <Action actionId="3">
+                <!-- 1 -->
+                <Name>Reject</Name>
+            </Action>
+            <Action actionId="4">
+                <!-- 1 -->
+                <Name>Archive</Name>
+            </Action>
+        </Actions>
+    </Document>
+    <States>
+    <!-- KOMENTAR: Stanje pamti prethodnu postavku polja. -->
+    <!-- 1..* -->
+    <State stateId="1">
+        <StateType>INIT_STATE</StateType>
+        <!-- 0..* -->
+        <Hide fieldId="1" />
+        <Hide fieldId="3" />
+        <!-- 0..* -->
+        <Mandatory fieldId="4" />
+        <!-- 1 -->
+        <Transitions>
+            <!-- 0..* -->
+            <Transition triggerAction="1" transitionId="2" />
+        </Transitions>
+    </State>
+    <State stateId="2">
+        <StateType>SAVED_STATE</StateType>
+        <!-- 0..* -->
+        <Mandatory fieldId="1" />
+        <!-- 0..* -->
+        <Delete fieldId="3" />
+        <!-- 1 -->
+        <Transitions>
+            <!-- 0..* -->
+            <Transition triggerAction="2" transitionId="1" />
+        </Transitions>
+    </State>
+    <State stateId="3">
+        <StateType>SUBMITED_STATE</StateType>
+        <!-- 0..* -->
+        <Mandatory fieldId="1" />
+        <Mandatory fieldId="3" />
+        <!-- 1 -->
+        <Transitions />
+    </State>
+    <State stateId="4">
+        <StateType>REJECTED_STATE</StateType>
+        <!-- 0..* -->
+        <Mandatory fieldId="1" />
+        <!-- 1 -->
+        <Transitions />
+    </State>
+    <State stateId="5">
+        <StateType>ARCHIVED_STATE</StateType>
+        <!-- 0..* -->
+        <Mandatory fieldId="1" />
+        <!-- 1 -->
+        <Transitions />
+    </State>
+    </States>
+    <Transitions>
+        <!-- 0..* -->
+        <Transition transitionId="1">
+            <!-- 0..1 -->
+            <Fail stateId="3" />
+            <!-- 0..1 -->
+            <Success stateId="4" />
+        </Transition>
+        <Transition transitionId="2">
+            <!-- 0..1 -->
+            <Success stateId="2" />
+        </Transition>
+    </Transitions>
+</Data>
