@@ -1,40 +1,24 @@
-<?xml ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Data>
     <Document>
         <!-- 1 -->
         <Title>
             Petcha
-        </Title>`
+        </Title>
         <!-- 1 -->
         <Fields>
             <!-- 1..* -->
-            <Field fieldId="1" type="RADIO_GROUP">
+            <Field fieldId="1" type="CHECKBOX">
                 <!-- 1 -->
                 <Name>FieldName1</Name>
-                <!-- 2..* -->
-                <Value>Red</Value>
-                <Value>Blue</Value>
             </Field>
             <Field fieldId="2" type="TEXTFIELD">
                 <!-- 1 -->
                 <Name>FieldName2</Name>
             </Field>
-            <Field fieldId="3" type="SPINNER">
+            <Field fieldId="3" type="DATE">
                 <!-- 1 -->
                 <Name>FieldName2</Name>
-                <!-- 1 -->
-                <MinValue>0</MinValue>
-                <!-- 1 -->
-                <MaxValue>10</MaxValue>
-                <!-- 1 -->
-                <Step>2</Step>
-            </Field>
-            <Field fieldId="4" type="CHECK_GROUP">
-                <!-- 1 -->
-                <Name>FieldName3</Name>
-                <!-- 2..* -->
-                <Value>Male</Value>
-                <Value>Female</Value>
             </Field>
         </Fields>
         <Actions>
