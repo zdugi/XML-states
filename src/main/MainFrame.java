@@ -29,7 +29,7 @@ public class MainFrame extends JFrame {
         menu.add(close);
         setJMenuBar(menuBar);
 
-        // setContentPane(new DocumentView()); //proba
+         setContentPane(new DocumentView()); //proba
 
     }
     public static void main(String[] argv) {
