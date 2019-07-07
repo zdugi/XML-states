@@ -8,11 +8,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.*;
 
-public class MainFrame extends JFrame {
+public class GUIApplication extends JFrame {
     private DocumentView documentView;
     private String documentPath;
 
-    public MainFrame() {
+    public GUIApplication() {
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setTitle("XML-states");
         setSize(600, 400);
@@ -38,6 +38,12 @@ public class MainFrame extends JFrame {
                 if(retVal == JFileChooser.APPROVE_OPTION)
                 {
                     documentPath = j.getSelectedFile().getAbsolutePath();
+                    documentView = new DocumentView();
+                    documentView.setDocument(XMLReader.readXML(documentPath));
+                    setContentPane(documentView);
+                    GUIApplication.this.invalidate();
+                    GUIApplication.this.validate();
+                    GUIApplication.this.repaint();
                 }
             }
         });
@@ -70,17 +76,11 @@ public class MainFrame extends JFrame {
             }
         });
 
-
-
-
         menuBar.add(menu);
         menu.add(load);
         menu.addSeparator();
         menu.add(close);
         setJMenuBar(menuBar);
-
-        setContentPane(new DocumentView()); //proba
-
     }
     public static void main(String[] argv) {
         try {
@@ -89,6 +89,6 @@ public class MainFrame extends JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        new MainFrame().setVisible(true);
+        new GUIApplication().setVisible(true);
     }
 }

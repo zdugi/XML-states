@@ -1,6 +1,7 @@
 package view;
 
 import model.Document;
+import model.Field;
 import tools.FieldTypes;
 
 import javax.swing.*;
@@ -37,7 +38,7 @@ public class DocumentView extends JPanel {
         gbl_fld_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         fieldSpace.setLayout(gbl_fld_panel);
 
-        FieldView txtField = new FieldView("Name: ", FieldTypes.TEXTFIELD);
+        FieldView txtField = new FieldView(new Field(FieldTypes.TEXTFIELD, "Name: ", 1));
         GridBagConstraints gbc_txtField = new GridBagConstraints();
         gbc_txtField.fill = GridBagConstraints.HORIZONTAL;
         gbc_txtField.insets = new Insets(0, 0, 5, 0);
@@ -46,7 +47,7 @@ public class DocumentView extends JPanel {
         gbc_txtField.gridy = 0;
         fieldSpace.add(txtField, gbc_txtField);
 
-        FieldView txtField1 = new FieldView("Name: ", FieldTypes.TEXTFIELD);
+        FieldView txtField1 = new FieldView(new Field(FieldTypes.TEXTFIELD, "Name: ", 2));
         GridBagConstraints gbc_txtField1 = new GridBagConstraints();
         gbc_txtField1.fill = GridBagConstraints.HORIZONTAL;
         gbc_txtField1.insets = new Insets(0, 0, 5, 0);
@@ -55,7 +56,7 @@ public class DocumentView extends JPanel {
         gbc_txtField1.gridy = 1;
         fieldSpace.add(txtField1, gbc_txtField1);
 
-        FieldView dateField = new FieldView("Name: ", FieldTypes.DATE);
+        FieldView dateField = new FieldView(new Field(FieldTypes.DATE, "Name: ", 3));
         GridBagConstraints gbc_txtField2 = new GridBagConstraints();
         gbc_txtField2.fill = GridBagConstraints.HORIZONTAL;
         gbc_txtField2.insets = new Insets(0, 0, 5, 0);
@@ -133,4 +134,8 @@ public class DocumentView extends JPanel {
         gbc_btnArchive.gridy = 3;
         actionSpace.add(btnArchive, gbc_btnArchive);
     }
+
+    public Document getDocument() { return document; }
+
+    public void setDocument(Document document) { this.document = document; }
 }

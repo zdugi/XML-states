@@ -6,6 +6,7 @@ public class Field {
     private FieldTypes fieldType;
     private String fieldName;
     private int fieldId;
+    private boolean empty;
 
     public Field(FieldTypes fieldType, String fieldName, int fieldId) {
         this.fieldType = fieldType;
@@ -36,4 +37,8 @@ public class Field {
     public void setFieldType(FieldTypes fieldType) {
         this.fieldType = fieldType;
     }
+
+    public boolean isEmpty() { return empty; }
+
+    public void setEmpty(boolean empty) { this.empty = empty; }
 }
