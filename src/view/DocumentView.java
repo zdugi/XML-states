@@ -7,6 +7,8 @@ import javax.swing.border.Border;
 import java.awt.*;
 
 public class DocumentView extends JPanel {
+
+    private void setConstraint
     public DocumentView()
     {
         GridBagLayout gbl_doc = new GridBagLayout();
@@ -23,7 +25,11 @@ public class DocumentView extends JPanel {
         gbc_panel.fill = GridBagConstraints.BOTH;
         gbc_panel.gridx = 0;
         gbc_panel.gridy = 0;
-        add(fieldSpace, gbc_panel);
+
+        JScrollPane scrollArea = new JScrollPane();
+        scrollArea.setBorder(BorderFactory.createEmptyBorder());
+        scrollArea.setViewportView(fieldSpace);
+        add(scrollArea, gbc_panel);
 
         GridBagLayout gbl_fld_panel = new GridBagLayout();
         gbl_fld_panel.columnWidths = new int[]{85, 0};
@@ -59,14 +65,14 @@ public class DocumentView extends JPanel {
 
         GridBagLayout gbl_act_panel = new GridBagLayout();
         gbl_act_panel.columnWidths = new int[]{85, 0};
-        gbl_act_panel.rowHeights = new int[]{21, 0, 0, 0, 0};
+        gbl_act_panel.rowHeights = new int[]{40, 40, 40, 40, 40};
         gbl_act_panel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
         gbl_act_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         actionSpace.setLayout(gbl_act_panel);
 
         JButton btnSave = new JButton("Save");
         GridBagConstraints gbc_btnSave = new GridBagConstraints();
-        gbc_btnSave.fill = GridBagConstraints.HORIZONTAL;
+        gbc_btnSave.fill = GridBagConstraints.BOTH;
         gbc_btnSave.insets = new Insets(0, 0, 5, 0);
         gbc_btnSave.anchor = GridBagConstraints.WEST;
         gbc_btnSave.gridx = 0;
@@ -75,7 +81,7 @@ public class DocumentView extends JPanel {
 
         JButton btnSubmit = new JButton("Submit");
         GridBagConstraints gbc_btnSubmit = new GridBagConstraints();
-        gbc_btnSubmit.fill = GridBagConstraints.HORIZONTAL;
+        gbc_btnSubmit.fill = GridBagConstraints.BOTH;
         gbc_btnSubmit.insets = new Insets(0, 0, 5, 0);
         gbc_btnSubmit.gridx = 0;
         gbc_btnSubmit.gridy = 1;
@@ -83,7 +89,7 @@ public class DocumentView extends JPanel {
 
         JButton btnReject = new JButton("Reject");
         GridBagConstraints gbc_btnReject = new GridBagConstraints();
-        gbc_btnReject.fill = GridBagConstraints.HORIZONTAL;
+        gbc_btnReject.fill = GridBagConstraints.BOTH;
         gbc_btnReject.insets = new Insets(0, 0, 5, 0);
         gbc_btnReject.gridx = 0;
         gbc_btnReject.gridy = 2;
@@ -91,7 +97,7 @@ public class DocumentView extends JPanel {
 
         JButton btnArchive = new JButton("Archive");
         GridBagConstraints gbc_btnArchive = new GridBagConstraints();
-        gbc_btnArchive.fill = GridBagConstraints.HORIZONTAL;
+        gbc_btnArchive.fill = GridBagConstraints.BOTH;
         gbc_btnArchive.gridx = 0;
         gbc_btnArchive.gridy = 3;
         actionSpace.add(btnArchive, gbc_btnArchive);
