@@ -50,7 +50,7 @@
         <Hide fieldId="1" />
         <Hide fieldId="3" />
         <!-- 0..* -->
-        <Mandatory fieldId="4" />
+        <Mandatory fieldId="2" />
         <!-- 1 -->
         <Transitions>
             <!-- 0..* -->
@@ -101,6 +101,8 @@
             <Success stateId="4" />
         </Transition>
         <Transition transitionId="2">
+            <!-- 0..1 -->
+            <Fail stateId="1" />
             <!-- 0..1 -->
             <Success stateId="2" />
         </Transition>

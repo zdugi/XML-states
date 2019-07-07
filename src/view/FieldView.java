@@ -1,5 +1,6 @@
 package view;
 
+import model.Field;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
@@ -16,6 +17,7 @@ public class FieldView extends JPanel {
     private JLabel label;
     private JComponent field;
     private FieldTypes fieldType;
+    private Field fieldModel;
 
     public FieldView(String text, FieldTypes type)
     {
