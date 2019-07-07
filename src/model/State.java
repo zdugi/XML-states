@@ -1,19 +1,27 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 public abstract class State {
     protected int stateID;
-    protected ArrayList<Field> deleted;
-    protected ArrayList<Field> hidden;
-    protected ArrayList<Field> mandatory;
+    protected Collection<Field> deleted;
+    protected Collection<Field> hidden;
+    protected Collection<Field> mandatory;
     protected HashMap<Integer, Transition> transitions; // Integer stands for ActionID
     protected Document document;
 
     public State(int stateID, Document document) {
         this.stateID = stateID;
         this.document = document;
+        deleted = new ArrayList<Field>();
+        hidden = new ArrayList<Field>();
+        mandatory = new ArrayList<Field>();
+        transitions = new HashMap<Integer, Transition>();
+    }
+
+    public State() {
         deleted = new ArrayList<Field>();
         hidden = new ArrayList<Field>();
         mandatory = new ArrayList<Field>();

@@ -11,6 +11,15 @@ public class Action {
         this.transition = transition;
     }
 
+    public Action(int actionID, String name) {
+        this.actionID = actionID;
+        this.name = name;
+    }
+
+    public Action() {
+
+    }
+
     public Transition getTransition() {
         return transition;
     }

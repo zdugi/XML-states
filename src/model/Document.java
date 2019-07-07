@@ -1,18 +1,24 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class Document {
     private String title;
     private State currentState;
-    private ArrayList<Field> fields;
-    private ArrayList<Action> actions;
+    private Collection<Field> fields;
+    private Collection<Action> actions;
 
-    public Document(String title, State currentState, ArrayList<Field> fields, ArrayList<Action> actions) {
+    public Document(String title, State currentState, Collection<Field> fields, Collection<Action> actions) {
         this.title = title;
         this.currentState = currentState;
         this.fields = fields;
         this.actions = actions;
+    }
+
+    public Document() {
+        fields = new ArrayList<Field>();
+        actions = new ArrayList<Action>();
     }
 
     public void changeState(State state) {

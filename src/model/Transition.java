@@ -11,6 +11,10 @@ public class Transition {
         this.success = success;
     }
 
+    public Transition() {
+
+    }
+
     public State getSuccess() {
         return success;
     }
