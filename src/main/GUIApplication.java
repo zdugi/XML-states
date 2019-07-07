@@ -1,5 +1,6 @@
 package main;
 
+import model.Document;
 import tools.XMLReader;
 import view.DocumentView;
 
@@ -39,11 +40,17 @@ public class GUIApplication extends JFrame {
                 {
                     documentPath = j.getSelectedFile().getAbsolutePath();
                     documentView = new DocumentView();
-                    documentView.setDocument(XMLReader.readXML(documentPath));
-                    setContentPane(documentView);
-                    GUIApplication.this.invalidate();
-                    GUIApplication.this.validate();
-                    GUIApplication.this.repaint();
+                    Document doc = XMLReader.readXML(documentPath);
+                    if(doc == null)
+                        JOptionPane.showMessageDialog(null,
+                                "Unexpected error while working with xml file");
+                    else {
+                        documentView.setDocument(doc);
+                        setContentPane(documentView);
+                        GUIApplication.this.invalidate();
+                        GUIApplication.this.validate();
+                        GUIApplication.this.repaint();
+                    }
                 }
             }
         });

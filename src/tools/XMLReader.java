@@ -170,7 +170,8 @@ public abstract class XMLReader {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            document = null;
         }
 
         return document;
