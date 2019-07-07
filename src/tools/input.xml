@@ -1,0 +1,33 @@
+<?xml version = "1.0"?>
+<Data>
+   <Document>
+      <Title>
+         Petcha
+      </Title>
+      <Fields>
+         <Field fieldId="1" type="CHECKBOX">
+            <Name>FieldName1</Name>
+         </Field>
+         <Field fieldId="2" type="TEXTFIELD">
+            <Name>FieldName2</Name>
+         </Field>
+         <Field fieldId="3" type="DATE">
+            <Name>FieldName2</Name>
+         </Field>
+      </Fields>
+      <Actions>
+         <Action actionId="1">
+            <Name>Save</Name>
+         </Action>
+         <Action actionId="2">
+            <Name>Submit</Name>
+         </Action>
+         <Action actionId="3">
+            <Name>Reject</Name>
+         </Action>
+         <Action actionId="4">
+            <Name>Archive</Name>
+         </Action>
+      </Actions>
+   </Document>
+</Data>

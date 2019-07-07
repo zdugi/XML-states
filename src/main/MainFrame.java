@@ -1,5 +1,7 @@
 package main;
 
+import view.DocumentView;
+
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 
@@ -27,9 +29,16 @@ public class MainFrame extends JFrame {
         menu.add(close);
         setJMenuBar(menuBar);
 
+        // setContentPane(new DocumentView()); //proba
+
     }
-    public static void main(String[] argv)
-    {
+    public static void main(String[] argv) {
+        try {
+            UIManager.setLookAndFeel(
+                    UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         new MainFrame().setVisible(true);
     }
 }
