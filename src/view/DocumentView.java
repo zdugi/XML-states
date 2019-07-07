@@ -3,16 +3,14 @@ package view;
 import tools.FieldTypes;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class DocumentView extends JPanel {
 
-    private void setConstraint
-    public DocumentView()
-    {
+    public DocumentView() {
         GridBagLayout gbl_doc = new GridBagLayout();
-        GridBagConstraints c = new GridBagConstraints();
         gbl_doc.columnWidths = new int[]{0, 0, 0};
         gbl_doc.rowHeights = new int[]{0, 0};
         gbl_doc.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
@@ -56,6 +54,15 @@ public class DocumentView extends JPanel {
         gbc_txtField1.gridy = 1;
         fieldSpace.add(txtField1, gbc_txtField1);
 
+        FieldView dateField = new FieldView("Name: ", FieldTypes.DATE);
+        GridBagConstraints gbc_txtField2 = new GridBagConstraints();
+        gbc_txtField2.fill = GridBagConstraints.HORIZONTAL;
+        gbc_txtField2.insets = new Insets(0, 0, 5, 0);
+        gbc_txtField2.anchor = GridBagConstraints.WEST;
+        gbc_txtField2.gridx = 0;
+        gbc_txtField2.gridy = 2;
+        fieldSpace.add(dateField, gbc_txtField2);
+
         JPanel actionSpace = new JPanel();
         GridBagConstraints gbc_panel_1 = new GridBagConstraints();
         gbc_panel_1.fill = GridBagConstraints.BOTH;
@@ -70,7 +77,13 @@ public class DocumentView extends JPanel {
         gbl_act_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         actionSpace.setLayout(gbl_act_panel);
 
-        JButton btnSave = new JButton("Save");
+        ActionView btnSave = new ActionView("Save");
+        btnSave.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
         GridBagConstraints gbc_btnSave = new GridBagConstraints();
         gbc_btnSave.fill = GridBagConstraints.BOTH;
         gbc_btnSave.insets = new Insets(0, 0, 5, 0);
@@ -79,7 +92,13 @@ public class DocumentView extends JPanel {
         gbc_btnSave.gridy = 0;
         actionSpace.add(btnSave, gbc_btnSave);
 
-        JButton btnSubmit = new JButton("Submit");
+        ActionView btnSubmit = new ActionView("Submit");
+        btnSubmit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
         GridBagConstraints gbc_btnSubmit = new GridBagConstraints();
         gbc_btnSubmit.fill = GridBagConstraints.BOTH;
         gbc_btnSubmit.insets = new Insets(0, 0, 5, 0);
@@ -87,7 +106,13 @@ public class DocumentView extends JPanel {
         gbc_btnSubmit.gridy = 1;
         actionSpace.add(btnSubmit, gbc_btnSubmit);
 
-        JButton btnReject = new JButton("Reject");
+        ActionView btnReject = new ActionView("Reject");
+        btnReject.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
         GridBagConstraints gbc_btnReject = new GridBagConstraints();
         gbc_btnReject.fill = GridBagConstraints.BOTH;
         gbc_btnReject.insets = new Insets(0, 0, 5, 0);
@@ -95,7 +120,13 @@ public class DocumentView extends JPanel {
         gbc_btnReject.gridy = 2;
         actionSpace.add(btnReject, gbc_btnReject);
 
-        JButton btnArchive = new JButton("Archive");
+        ActionView btnArchive = new ActionView("Archive");
+        btnArchive.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
         GridBagConstraints gbc_btnArchive = new GridBagConstraints();
         gbc_btnArchive.fill = GridBagConstraints.BOTH;
         gbc_btnArchive.gridx = 0;
