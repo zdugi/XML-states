@@ -1,6 +1,10 @@
 package model;
 
 public class InitState extends State {
+    public InitState(int stateID, Document document) {
+        super(stateID, document);
+    }
+
     @Override
     public void entry() {
 
@@ -8,6 +12,6 @@ public class InitState extends State {
 
     @Override
     public String doJob() {
-        return null;
+        return "Init.";
     }
 }
