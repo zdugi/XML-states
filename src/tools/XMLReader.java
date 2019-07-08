@@ -92,13 +92,9 @@ public abstract class XMLReader {
                 String type = state.getElementsByTagName("StateType").item(0).getTextContent();
 
                 State s;
-                if(type.equals("INIT_STATE"))
-                {
-                    s = createState(type, id, document);
-                    document.setCurrentState(s);
-                }
-                else
-                    s = createState(type, id, null);
+
+                s = createState(type, id, document);
+                document.setCurrentState(s);
 
                 NodeList sFields = state.getElementsByTagName("Mandatory");
 

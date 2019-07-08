@@ -35,7 +35,7 @@ public class Controller {
             documentModel.removeField(field);
         }
 
-        documentModel.setCurrentState(nextState);
+        documentModel.changeState(nextState);
         documentView.updateView();
     }
 
