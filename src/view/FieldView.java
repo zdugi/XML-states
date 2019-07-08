@@ -25,7 +25,7 @@ public class FieldView extends JPanel {
     {
         this.fieldModel = fieldModel;
         setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
-        label = new JLabel(fieldModel.getFieldName());
+        label = new JLabel(fieldModel.getFieldDisplayName());
         switch (fieldModel.getFieldType())
         {
             case TEXTFIELD:

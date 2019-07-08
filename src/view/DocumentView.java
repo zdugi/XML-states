@@ -1,8 +1,10 @@
 package view;
 
+import controller.Controller;
 import model.Document;
 import model.Field;
-import tools.FieldTypes;
+import model.Action;
+import model.Transition;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,8 +13,19 @@ import java.awt.event.ActionListener;
 
 public class DocumentView extends JPanel {
     private Document document;
-    public DocumentView() {
-        GridBagLayout gbl_doc = new GridBagLayout();
+
+
+
+    public DocumentView(Document document) {
+        this.document = document;
+    }
+
+    public void updateView() {
+        this.removeAll();
+
+        GridBagLayout gbl_doc;
+
+        gbl_doc = new GridBagLayout();
         gbl_doc.columnWidths = new int[]{0, 0, 0};
         gbl_doc.rowHeights = new int[]{0, 0};
         gbl_doc.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
@@ -38,32 +51,33 @@ public class DocumentView extends JPanel {
         gbl_fld_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         fieldSpace.setLayout(gbl_fld_panel);
 
-        FieldView txtField = new FieldView(new Field(FieldTypes.TEXTFIELD, "Name: ", 1));
-        GridBagConstraints gbc_txtField = new GridBagConstraints();
-        gbc_txtField.fill = GridBagConstraints.HORIZONTAL;
-        gbc_txtField.insets = new Insets(0, 0, 5, 0);
-        gbc_txtField.anchor = GridBagConstraints.WEST;
-        gbc_txtField.gridx = 0;
-        gbc_txtField.gridy = 0;
-        fieldSpace.add(txtField, gbc_txtField);
+        // Generate fields
+        int row = 0;
 
-        FieldView txtField1 = new FieldView(new Field(FieldTypes.TEXTFIELD, "Name: ", 2));
-        GridBagConstraints gbc_txtField1 = new GridBagConstraints();
-        gbc_txtField1.fill = GridBagConstraints.HORIZONTAL;
-        gbc_txtField1.insets = new Insets(0, 0, 5, 0);
-        gbc_txtField1.anchor = GridBagConstraints.WEST;
-        gbc_txtField1.gridx = 0;
-        gbc_txtField1.gridy = 1;
-        fieldSpace.add(txtField1, gbc_txtField1);
+        for (Field field : this.document.getFields()) {
+            boolean mandatory = document.getCurrentState().getMandatory().contains(field);
+            boolean deleted = document.getCurrentState().getDeleted().contains(field);
+            boolean hidden = document.getCurrentState().getHidden().contains(field);
 
-        FieldView dateField = new FieldView(new Field(FieldTypes.DATE, "Name: ", 3));
-        GridBagConstraints gbc_txtField2 = new GridBagConstraints();
-        gbc_txtField2.fill = GridBagConstraints.HORIZONTAL;
-        gbc_txtField2.insets = new Insets(0, 0, 5, 0);
-        gbc_txtField2.anchor = GridBagConstraints.WEST;
-        gbc_txtField2.gridx = 0;
-        gbc_txtField2.gridy = 2;
-        fieldSpace.add(dateField, gbc_txtField2);
+            // Show field only if it is mandatory or 'default'
+            if (mandatory || (!mandatory && !deleted && !hidden)) {
+                String displayName = field.getFieldName();
+
+                if (mandatory)
+                    displayName = "* " + displayName;
+
+                field.setFieldDisplayName(displayName);
+                FieldView txtField = new FieldView(field);
+                GridBagConstraints gbc_txtField = new GridBagConstraints();
+                gbc_txtField.fill = GridBagConstraints.HORIZONTAL;
+                gbc_txtField.insets = new Insets(0, 0, 5, 0);
+                gbc_txtField.anchor = GridBagConstraints.WEST;
+                gbc_txtField.gridx = 0;
+                gbc_txtField.gridy = row++;
+                fieldSpace.add(txtField, gbc_txtField);
+            }
+            // else: deleted or hidden, do nothing
+        }
 
         JPanel actionSpace = new JPanel();
         GridBagConstraints gbc_panel_1 = new GridBagConstraints();
@@ -79,63 +93,41 @@ public class DocumentView extends JPanel {
         gbl_act_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         actionSpace.setLayout(gbl_act_panel);
 
-        ActionView btnSave = new ActionView("Save");
-        btnSave.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        // Generate actions - buttons
+        Controller controller = new Controller(this.document, this);
+        row = 0;
+
+        for (Action action : document.getActions()) {
+            Transition trans = document.getCurrentState().getTransition(action.getActionID());
+
+            if (trans != null) {
+                ActionView btnSave = new ActionView(action.getName());
+
+                btnSave.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        controller.performTransition(trans);
+                    }
+                });
+
+                GridBagConstraints gbc_btnSave = new GridBagConstraints();
+                gbc_btnSave.fill = GridBagConstraints.BOTH;
+                gbc_btnSave.insets = new Insets(0, 0, 5, 0);
+                gbc_btnSave.anchor = GridBagConstraints.WEST;
+                gbc_btnSave.gridx = 0;
+                gbc_btnSave.gridy = row++;
+                actionSpace.add(btnSave, gbc_btnSave);
             }
-        });
+        }
 
-        GridBagConstraints gbc_btnSave = new GridBagConstraints();
-        gbc_btnSave.fill = GridBagConstraints.BOTH;
-        gbc_btnSave.insets = new Insets(0, 0, 5, 0);
-        gbc_btnSave.anchor = GridBagConstraints.WEST;
-        gbc_btnSave.gridx = 0;
-        gbc_btnSave.gridy = 0;
-        actionSpace.add(btnSave, gbc_btnSave);
-
-        ActionView btnSubmit = new ActionView("Submit");
-        btnSubmit.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-
-        GridBagConstraints gbc_btnSubmit = new GridBagConstraints();
-        gbc_btnSubmit.fill = GridBagConstraints.BOTH;
-        gbc_btnSubmit.insets = new Insets(0, 0, 5, 0);
-        gbc_btnSubmit.gridx = 0;
-        gbc_btnSubmit.gridy = 1;
-        actionSpace.add(btnSubmit, gbc_btnSubmit);
-
-        ActionView btnReject = new ActionView("Reject");
-        btnReject.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-
-        GridBagConstraints gbc_btnReject = new GridBagConstraints();
-        gbc_btnReject.fill = GridBagConstraints.BOTH;
-        gbc_btnReject.insets = new Insets(0, 0, 5, 0);
-        gbc_btnReject.gridx = 0;
-        gbc_btnReject.gridy = 2;
-        actionSpace.add(btnReject, gbc_btnReject);
-
-        ActionView btnArchive = new ActionView("Archive");
-        btnArchive.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-
-        GridBagConstraints gbc_btnArchive = new GridBagConstraints();
-        gbc_btnArchive.fill = GridBagConstraints.BOTH;
-        gbc_btnArchive.gridx = 0;
-        gbc_btnArchive.gridy = 3;
-        actionSpace.add(btnArchive, gbc_btnArchive);
+        this.invalidate();
+        this.validate();
+        this.repaint();
     }
 
     public Document getDocument() { return document; }
 
-    public void setDocument(Document document) { this.document = document; }
+    public void setDocument(Document document) {
+        this.document = document;
+        updateView();
+    }
 }

@@ -56,6 +56,14 @@ public abstract class State {
         transitions.put(actionID, t);
     }
 
+    public Collection<Field> getDeleted() { return deleted; }
+
+    public Collection<Field> getHidden() { return hidden; }
+
+    public Collection<Field> getMandatory() { return mandatory; }
+
+    public Transition getTransition(int actionId) { return transitions.get(actionId); }
+
     public abstract void entry();
     public abstract String doJob();
 }

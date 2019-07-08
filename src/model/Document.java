@@ -46,6 +46,8 @@ public class Document {
         fields.add(f);
     }
 
+    public Collection<Field> getFields() { return fields; }
+
     public void removeField(Field f) {
         fields.remove(f);
     }
@@ -53,4 +55,7 @@ public class Document {
     public void addAction(Action a) {
         actions.add(a);
     }
+
+    public Collection<Action> getActions() { return actions; }
+
 }

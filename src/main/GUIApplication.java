@@ -39,13 +39,14 @@ public class GUIApplication extends JFrame {
                 if(retVal == JFileChooser.APPROVE_OPTION)
                 {
                     documentPath = j.getSelectedFile().getAbsolutePath();
-                    documentView = new DocumentView();
                     Document doc = XMLReader.readXML(documentPath);
                     if(doc == null)
                         JOptionPane.showMessageDialog(null,
                                 "Unexpected error while working with xml file");
                     else {
-                        documentView.setDocument(doc);
+                        setTitle(doc.getTitle());
+                        documentView = new DocumentView(doc);
+                        documentView.updateView();
                         setContentPane(documentView);
                         GUIApplication.this.invalidate();
                         GUIApplication.this.validate();

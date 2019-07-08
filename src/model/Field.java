@@ -7,11 +7,14 @@ public class Field {
     private String fieldName;
     private int fieldId;
     private boolean empty;
+    private String fieldDisplayName;
 
     public Field(FieldTypes fieldType, String fieldName, int fieldId) {
         this.fieldType = fieldType;
         this.fieldName = fieldName;
         this.fieldId = fieldId;
+        this.empty = true;
+        this.fieldDisplayName = fieldName;
     }
 
     public int getFieldId() {
@@ -41,4 +44,8 @@ public class Field {
     public boolean isEmpty() { return empty; }
 
     public void setEmpty(boolean empty) { this.empty = empty; }
+
+    public String getFieldDisplayName() { return fieldDisplayName; }
+
+    public void setFieldDisplayName(String fieldDisplayName) { this.fieldDisplayName = fieldDisplayName; }
 }
