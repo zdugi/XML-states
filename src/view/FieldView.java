@@ -30,7 +30,7 @@ public class FieldView extends JPanel {
         {
             case TEXTFIELD:
                 field = new JTextField();
-                JTextField tempT = (JTextField)field;
+                final JTextField tempT = (JTextField)field;
                 tempT.getDocument().addDocumentListener(new DocumentListener() {
                     public void changedUpdate(DocumentEvent e) {
                         changeEmpty();
@@ -45,21 +45,21 @@ public class FieldView extends JPanel {
                     public void changeEmpty()
                     {
                         if(tempT.getText().equals("")) {
-                            fieldModel.setEmpty(true);
+                            FieldView.this.fieldModel.setEmpty(true);
                         }
                         else
                         {
-                            fieldModel.setEmpty(false);
+                            FieldView.this.fieldModel.setEmpty(false);
                         }
                     }
                 });
             break;
             case CHECKBOX:
                 field = new JCheckBox("");
-                JCheckBox tempC = (JCheckBox)field;
+                final JCheckBox tempC = (JCheckBox)field;
                 tempC.addItemListener(new ItemListener() {
                     public void itemStateChanged(ItemEvent e) {
-                        fieldModel.setEmpty(tempC.isSelected());
+                        FieldView.this.fieldModel.setEmpty(tempC.isSelected());
                     }
                 });
             break;
@@ -71,7 +71,7 @@ public class FieldView extends JPanel {
                 p.put("text.year", "Year");
                 JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
                 field = new JDatePickerImpl(datePanel, new DateLabelFormatter());
-                JFormattedTextField tempF = ((JDatePickerImpl)field).getJFormattedTextField();
+                final JFormattedTextField tempF = ((JDatePickerImpl)field).getJFormattedTextField();
                 tempF.getDocument().addDocumentListener(new DocumentListener() {
                 public void changedUpdate(DocumentEvent e) {
                     changeEmpty();
@@ -86,11 +86,11 @@ public class FieldView extends JPanel {
                 public void changeEmpty()
                 {
                     if(tempF.getText().equals("")) {
-                        fieldModel.setEmpty(true);
+                        FieldView.this.fieldModel.setEmpty(true);
                     }
                     else
                     {
-                        fieldModel.setEmpty(false);
+                        FieldView.this.fieldModel.setEmpty(false);
                     }
                 }
             });

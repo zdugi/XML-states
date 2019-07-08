@@ -6,6 +6,7 @@ import view.DocumentView;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -30,7 +31,7 @@ public class GUIApplication extends JFrame {
         load.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFileChooser j = new JFileChooser();
+                JFileChooser j = new JFileChooser(System.getProperty("user.dir")+ "\\testInputs");
                 j.setAcceptAllFileFilterUsed(false);
                 j.setDialogTitle("Select a .xml file");
                 FileNameExtensionFilter restrict = new FileNameExtensionFilter("XML document file (*.xml)", "xml");
