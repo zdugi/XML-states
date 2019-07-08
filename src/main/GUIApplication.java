@@ -12,7 +12,6 @@ import java.awt.event.*;
 
 public class GUIApplication extends JFrame {
     private DocumentView documentView;
-    private String documentPath;
 
     public GUIApplication() {
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -39,7 +38,7 @@ public class GUIApplication extends JFrame {
                 int retVal = j.showOpenDialog(null);
                 if(retVal == JFileChooser.APPROVE_OPTION)
                 {
-                    documentPath = j.getSelectedFile().getAbsolutePath();
+                    String documentPath = j.getSelectedFile().getAbsolutePath();
                     Document doc = XMLReader.readXML(documentPath);
                     if(doc == null)
                         JOptionPane.showMessageDialog(null,
