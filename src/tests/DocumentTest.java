@@ -40,7 +40,8 @@ public class DocumentTest {
     public void removeField() {
         Document doc = new Document();
         Field f = new Field(FieldTypes.TEXTFIELD, "Polje", 1);
-        doc.addField(f);
+        //doc.addField(f);
+        doc.getFields().add(f);
         doc.removeField(f);
 
 
