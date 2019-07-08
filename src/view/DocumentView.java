@@ -94,11 +94,11 @@ public class DocumentView extends JPanel {
         actionSpace.setLayout(gbl_act_panel);
 
         // Generate actions - buttons
-        Controller controller = new Controller(this.document, this);
+        final Controller controller = new Controller(this.document, this);
         row = 0;
 
         for (Action action : document.getActions()) {
-            Transition trans = document.getCurrentState().getTransition(action.getActionID());
+            final Transition trans = document.getCurrentState().getTransition(action.getActionID());
 
             if (trans != null) {
                 ActionView btnSave = new ActionView(action.getName());

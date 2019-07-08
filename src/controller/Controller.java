@@ -31,6 +31,10 @@ public class Controller {
             }
         }
 
+        for(Field field : nextState.getDeleted()) {
+            documentModel.removeField(field);
+        }
+
         documentModel.setCurrentState(nextState);
         documentView.updateView();
     }
