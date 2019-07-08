@@ -91,10 +91,12 @@ public abstract class XMLReader {
                 int id = Integer.parseInt(state.getAttribute("stateId"));
                 String type = state.getElementsByTagName("StateType").item(0).getTextContent();
 
-                State s;
-
-                s = createState(type, id, document);
-                document.setCurrentState(s);
+                State s = createState(type, id, document);
+                if(type.equals("INIT_STATE"))
+                {
+                    document.setCurrentState(s);
+                    System.out.println("aa");
+                }
 
                 NodeList sFields = state.getElementsByTagName("Mandatory");
 
