@@ -93,10 +93,7 @@ public abstract class XMLReader {
 
                 State s = createState(type, id, document);
                 if(type.equals("INIT_STATE"))
-                {
                     document.setCurrentState(s);
-                    System.out.println("aa");
-                }
 
                 NodeList sFields = state.getElementsByTagName("Mandatory");
 
@@ -168,7 +165,7 @@ public abstract class XMLReader {
             }
 
         } catch (Exception e) {
-            //e.printStackTrace();
+            e.printStackTrace();
             document = null;
         }
 

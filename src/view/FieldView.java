@@ -59,7 +59,7 @@ public class FieldView extends JPanel {
                 final JCheckBox tempC = (JCheckBox)field;
                 tempC.addItemListener(new ItemListener() {
                     public void itemStateChanged(ItemEvent e) {
-                        FieldView.this.fieldModel.setEmpty(tempC.isSelected());
+                        FieldView.this.fieldModel.setEmpty(!tempC.isSelected());
                     }
                 });
             break;
