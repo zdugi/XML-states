@@ -26,8 +26,11 @@ import gui.popUps.NewSubComp;
 import model.Data;
 import model.komponente.Komponenta;
 import model.komponente.SpinnerKomponenta;
+import paneli.CheckBox;
 import paneli.CheckBoxGroup;
 import paneli.Panel;
+import paneli.RadioButton;
+import paneli.RadioButtonGroup;
 import paneli.Spinner;
 import paneli.TextField;
 
@@ -179,7 +182,7 @@ public class ComponentsWindow extends JFrame{
 	public void postaviRadioButtonGroup(Komponenta comp)
 	{
 		ButtonGroup group = new ButtonGroup();
-		CheckBoxGroup radioGroup = new CheckBoxGroup(comp, group);
+		RadioButtonGroup radioGroup = new RadioButtonGroup(comp, group);
 		//data.getDokument().getKomponente().add(comp);
 		radioGroup.addMouseListener(new MouseAdapter() {
             @Override

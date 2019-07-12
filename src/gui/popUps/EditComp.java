@@ -16,15 +16,19 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import enums.VrstaKomponente;
 import enums.VrstaPodkomponente;
 import gui.mainWindows.ComponentsWindow;
 import model.komponente.Komponenta;
 import model.komponente.SpinnerKomponenta;
+import paneli.CheckBox;
 import paneli.CheckBoxGroup;
 import paneli.Group;
 import paneli.Panel;
+import paneli.RadioButton;
 import paneli.RadioButtonGroup;
 import paneli.Spinner;
 import paneli.TextField;
@@ -46,6 +50,7 @@ public class EditComp extends JFrame{
 	private JButton btnDodaj_1;
 	private JButton btnObrisi_1;
 	DefaultListModel listModel;
+	Panel selektovan;
 	
 	private EditComp(ComponentsWindow window) {
 		setResizable(false);
@@ -132,6 +137,22 @@ public class EditComp extends JFrame{
 		panelBoxa.add(btnDodaj_1, gbc_btnDodaj_1);
 		
 		list_1 = new JList(listModel);
+		list_1.addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent arg0) {
+                if (!arg0.getValueIsAdjusting()) {
+                  if (list_1.getSelectedIndex() == -1)
+                  {
+                	  EditComp.this.setSelektovan(null);
+                  }
+                  else
+                  {
+                	  EditComp.this.setSelektovan((Panel)list_1.getSelectedValue());
+                  }
+                }
+            }
+        });
 		GridBagConstraints gbc_list_1 = new GridBagConstraints();
 		gbc_list_1.gridwidth = 2;
 		gbc_list_1.gridheight = 2;
@@ -142,6 +163,23 @@ public class EditComp extends JFrame{
 		list_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		btnObrisi_1 = new JButton("Obrisi");
+		btnObrisi_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if (panel instanceof RadioButtonGroup)
+				{
+					((RadioButtonGroup)panel).ObrisiRadioButton((RadioButton)EditComp.this.selektovan);
+					listModel.removeElement(EditComp.this.selektovan);
+				}
+				else if (panel instanceof CheckBoxGroup)
+				{
+					((CheckBoxGroup)panel).ObrisiCheckBox((CheckBox)EditComp.this.selektovan);
+					listModel.removeElement(EditComp.this.selektovan);
+				}
+				EditComp.this.setSelektovan(null);
+			}
+		});
+		btnObrisi_1.setEnabled(false);
 		GridBagConstraints gbc_btnObrisi_1 = new GridBagConstraints();
 		gbc_btnObrisi_1.gridwidth = 2;
 		gbc_btnObrisi_1.insets = new Insets(0, 0, 0, 5);
@@ -184,7 +222,19 @@ public class EditComp extends JFrame{
 			btnObrisi_1.setVisible(true);
 			list_1.setVisible(true);
 			
-			
+			if (panel instanceof CheckBoxGroup)
+			{
+				for (CheckBox checkBox : ((CheckBoxGroup)panel).checkBoxs) {
+					listModel.addElement(checkBox);
+				
+				}
+			}
+			else if (panel instanceof RadioButtonGroup)
+			{
+				for (RadioButton radioButton : ((RadioButtonGroup)panel).radioButtons) {
+					listModel.addElement(radioButton);
+				}
+			}
 		}
 		else if (panel instanceof TextField)
 		{
@@ -215,6 +265,19 @@ public class EditComp extends JFrame{
 		}
 	}
 	
+	public void setSelektovan(Panel panel) {
+		this.selektovan = panel;
+		
+		if (panel == null)
+		{
+			btnObrisi_1.setEnabled(false);
+		}
+		else
+		{
+			btnObrisi_1.setEnabled(true);
+		}
+	}
+
 	public static EditComp getInstance(ComponentsWindow window) 
     { 
         if (single_instance == null) 

@@ -19,4 +19,9 @@ public class Panel extends JPanel {
 	public void setKomponenta(Komponenta komponenta) {
 		this.komponenta = komponenta;
 	}
+
+	@Override
+	public String toString() {
+		return "Panel [komponenta=" + komponenta + "]";
+	}
 }

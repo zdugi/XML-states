@@ -8,7 +8,7 @@ import model.komponente.Komponenta;
 
 public class CheckBoxGroup extends Group {
 	
-	ArrayList<CheckBox> checkBoxs;
+	public ArrayList<CheckBox> checkBoxs;
 	
 	public CheckBoxGroup(Komponenta komponenta, ButtonGroup buttonGroup) {
 		super(komponenta, buttonGroup);
@@ -16,13 +16,13 @@ public class CheckBoxGroup extends Group {
 	}
 	
 	public void DodajCheckBox(CheckBox checkBox) {
-		
+		super.getButtonGroup().add(checkBox.getCheckBox());
 		checkBoxs.add(checkBox);
 		add(checkBox);
 	}
 	
 	public void ObrisiCheckBox(CheckBox checkBox) {
-		
+		super.getButtonGroup().remove(checkBox.getCheckBox());
 		checkBoxs.remove(checkBox);
 		remove(checkBox);
 	}
