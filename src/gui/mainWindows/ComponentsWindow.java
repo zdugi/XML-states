@@ -8,13 +8,19 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.JToolBar;
 
+import enums.VrstaKomponente;
 import gui.popUps.NewCompChoice;
+import model.Data;
+import model.komponente.Komponenta;
 
 public class ComponentsWindow extends JFrame{
-	public ComponentsWindow() {
+	JPanel panelKomponenti;
+	public ComponentsWindow(Data data) {
 		
 		this.setSize(1200, 800);
 		this.setLocationRelativeTo(null);
@@ -27,8 +33,10 @@ public class ComponentsWindow extends JFrame{
 		JButton btnAddComponent = new JButton("Add component");
 		btnAddComponent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				NewCompChoice ncc = NewCompChoice.getInstance();
+				Komponenta comp = null;
+				NewCompChoice ncc = NewCompChoice.getInstance(panelKomponenti);
 				ncc.setVisible(true);
+				
 			}
 		});
 		toolBar.add(btnAddComponent);
@@ -41,8 +49,10 @@ public class ComponentsWindow extends JFrame{
 		btnDeleteComponent.setEnabled(false);
 		toolBar.add(btnDeleteComponent);
 		
-		JPanel panelKomponenti = new JPanel();
+		panelKomponenti = new JPanel();
+		panelKomponenti.setAlignmentX(LEFT_ALIGNMENT);
 		getContentPane().add(panelKomponenti, BorderLayout.CENTER);
+		panelKomponenti.setLayout(new GridLayout(4, 0, 0, 0));
 		
 		JPanel panelNastavka = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panelNastavka.getLayout();
@@ -69,4 +79,15 @@ public class ComponentsWindow extends JFrame{
 		panelAkcija.add(btnNewButton_4);
 	}
 	
+	public static void postaviTextField(JPanel con, Komponenta comp)
+	{
+		JPanel pnl = new JPanel();
+		JTextField fild = new JTextField(30);
+		fild.setEditable(false);
+		//data.getDokument().getKomponente().add(comp);
+		pnl.add(new JLabel(comp.getNaziv()));
+		pnl.add(fild);
+		con.add(pnl, -1);
+		con.revalidate();
+	}
 }
