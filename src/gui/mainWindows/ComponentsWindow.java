@@ -28,7 +28,8 @@ public class ComponentsWindow extends JFrame{
 	JPanel panelKomponenti;
 	private ArrayList<JPanel> paneli;
 	private JPanel selekcija;
-	
+	JButton btnEditComponent;
+	JButton btnDeleteComponent;
 	public ComponentsWindow(Data data) {
 		paneli = new ArrayList<JPanel>();
 		this.setSize(1200, 800);
@@ -49,11 +50,16 @@ public class ComponentsWindow extends JFrame{
 		});
 		toolBar.add(btnAddComponent);
 		
-		JButton btnEditComponent = new JButton("Edit component");
+		btnEditComponent = new JButton("Edit component");
 		btnEditComponent.setEnabled(false);
 		toolBar.add(btnEditComponent);
 		
-		JButton btnDeleteComponent = new JButton("Delete component");
+		btnDeleteComponent = new JButton("Delete component");
+		btnDeleteComponent.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				obrisi();
+			}
+		});
 		btnDeleteComponent.setEnabled(false);
 		toolBar.add(btnDeleteComponent);
 		
@@ -61,6 +67,12 @@ public class ComponentsWindow extends JFrame{
 		panelKomponenti.setAlignmentX(LEFT_ALIGNMENT);
 		getContentPane().add(panelKomponenti, BorderLayout.CENTER);
 		panelKomponenti.setLayout(new GridLayout(4, 0, 0, 0));
+		panelKomponenti.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+            	ComponentsWindow.this.setSeleckija(null);
+            }
+        });
 		
 		JPanel panelNastavka = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panelNastavka.getLayout();
@@ -119,7 +131,22 @@ public class ComponentsWindow extends JFrame{
 		
 		if (this.selekcija != null)
 		{
+			btnEditComponent.setEnabled(true);
+			btnDeleteComponent.setEnabled(true);
 			this.selekcija.setBorder(BorderFactory.createLineBorder(Color.red));
 		}
+		else
+		{
+			btnEditComponent.setEnabled(false);
+			btnDeleteComponent.setEnabled(false);
+		}
+	}
+	
+	public void obrisi()
+	{
+		panelKomponenti.remove(selekcija);
+		panelKomponenti.revalidate();
+		panelKomponenti.repaint();
+		setSeleckija(null);
 	}
 }
