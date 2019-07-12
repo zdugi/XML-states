@@ -103,6 +103,13 @@ public class ComponentsWindow extends JFrame{
 		getContentPane().add(panelNastavka, BorderLayout.SOUTH);
 		
 		JButton btnSaveAndNext = new JButton("Save and continue");
+		btnSaveAndNext.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					nextProzor();
+				}
+		
+		});
 		panelNastavka.add(btnSaveAndNext);
 		
 		JPanel panelAkcija = new JPanel();
@@ -122,6 +129,12 @@ public class ComponentsWindow extends JFrame{
 		panelAkcija.add(btnNewButton_4);
 	}
 	
+	public void nextProzor()
+	{
+		super.dispose();
+		StateTransitonWindow stw = new StateTransitonWindow();
+		stw.setVisible(true);
+	}
 	public void postaviTextField(Komponenta comp)
 	{
 		JTextField jTextField = new JTextField();
