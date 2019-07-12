@@ -23,6 +23,12 @@ import enums.VrstaKomponente;
 import gui.popUps.NewCompChoice;
 import model.Data;
 import model.komponente.Komponenta;
+import model.komponente.SpinnerKomponenta;
+
+import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
+import javax.swing.ButtonGroup;
+import javax.swing.JCheckBox;
 
 public class ComponentsWindow extends JFrame{
 	JPanel panelKomponenti;
@@ -30,6 +36,8 @@ public class ComponentsWindow extends JFrame{
 	private JPanel selekcija;
 	JButton btnEditComponent;
 	JButton btnDeleteComponent;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
+	
 	public ComponentsWindow(Data data) {
 		paneli = new ArrayList<JPanel>();
 		this.setSize(1200, 800);
@@ -123,6 +131,59 @@ public class ComponentsWindow extends JFrame{
 		panelKomponenti.revalidate();
 	}
 	
+	public void postaviSpinner(SpinnerKomponenta comp)
+	{
+		JPanel pnl = new JPanel();
+		JSpinner spinner = new JSpinner();
+		spinner.setEnabled(false);
+		spinner.setValue(comp.getDonjaGranica());
+		spinner.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+            	ComponentsWindow.this.setSeleckija(pnl);
+            }
+        });
+		//data.getDokument().getKomponente().add(comp);
+		pnl.add(new JLabel(comp.getNaziv()));
+		pnl.add(new JLabel("Gornja granica:"));
+		pnl.add(new JLabel(String.valueOf(comp.getGornjaGranica())));
+		pnl.add(new JLabel("Donja granica:"));
+		pnl.add(new JLabel(String.valueOf(comp.getDonjaGranica())));
+		pnl.add(spinner);
+		pnl.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+            	ComponentsWindow.this.setSeleckija(pnl);
+            }
+        });
+		panelKomponenti.add(pnl, -1);
+		panelKomponenti.revalidate();
+	}
+	
+	public void postaviCheckboxGroup(Komponenta comp)
+	{
+		JPanel pnl = new JPanel();
+		JTextField fild = new JTextField(30);
+		fild.setEditable(false);
+		fild.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+            	ComponentsWindow.this.setSeleckija(pnl);
+            }
+        });
+		//data.getDokument().getKomponente().add(comp);
+		pnl.add(new JLabel(comp.getNaziv()));
+		pnl.add(fild);
+		pnl.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+            	ComponentsWindow.this.setSeleckija(pnl);
+            }
+        });
+		panelKomponenti.add(pnl, -1);
+		panelKomponenti.revalidate();
+	}
+
 	public void setSeleckija(JPanel panel) {
 		if (this.selekcija != null)
 			this.selekcija.setBorder(null);

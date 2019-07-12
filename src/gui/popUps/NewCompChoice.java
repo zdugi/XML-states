@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -17,33 +18,128 @@ import javax.swing.JTextField;
 import enums.VrstaKomponente;
 import gui.mainWindows.ComponentsWindow;
 import model.komponente.Komponenta;
+import model.komponente.SpinnerKomponenta;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 public class NewCompChoice extends JFrame{
 	public static NewCompChoice single_instance = null;
 	private JTextField textField;
 	Komponenta comp;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	JLabel lblNewLabel;
+	JLabel lblGornjaGranica;
 	private NewCompChoice(ComponentsWindow window) {
+		setResizable(false);
 		
-		this.setSize(300, 140);
+		this.setSize(466, 167);
 		this.setLocationRelativeTo(null);
 		
 		JPanel panelBoxa = new JPanel();
+		panelBoxa.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		getContentPane().add(panelBoxa, BorderLayout.CENTER);
-		panelBoxa.setLayout(new GridLayout(0, 2, 0, 0));
+		GridBagLayout gbl_panelBoxa = new GridBagLayout();
+		gbl_panelBoxa.columnWidths = new int[]{70, 70, 70, 70, 0};
+		gbl_panelBoxa.rowHeights = new int[]{29, 26, 0};
+		gbl_panelBoxa.columnWeights = new double[]{1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gbl_panelBoxa.rowWeights = new double[]{1.0, 1.0, 1.0};
+		panelBoxa.setLayout(gbl_panelBoxa);
 		
 		JLabel lblIme = new JLabel("Ime komponente");
-		panelBoxa.add(lblIme);
+		GridBagConstraints gbc_lblIme = new GridBagConstraints();
+		gbc_lblIme.fill = GridBagConstraints.BOTH;
+		gbc_lblIme.insets = new Insets(0, 0, 5, 5);
+		gbc_lblIme.gridx = 0;
+		gbc_lblIme.gridy = 0;
+		gbc_lblIme.gridwidth = 2;
+		panelBoxa.add(lblIme, gbc_lblIme);
 		
 		textField = new JTextField();
-		panelBoxa.add(textField);
+		GridBagConstraints gbc_textField = new GridBagConstraints();
+		gbc_textField.fill = GridBagConstraints.BOTH;
+		gbc_textField.insets = new Insets(0, 0, 5, 0);
+		gbc_textField.gridx = 2;
+		gbc_textField.gridy = 0;
+		gbc_textField.gridwidth = 2;
+		panelBoxa.add(textField, gbc_textField);
 		textField.setColumns(10);
 		
 		JLabel lblTip = new JLabel("Tip");
-		panelBoxa.add(lblTip);
+		GridBagConstraints gbc_lblTip = new GridBagConstraints();
+		gbc_lblTip.fill = GridBagConstraints.BOTH;
+		gbc_lblTip.insets = new Insets(0, 0, 5, 5);
+		gbc_lblTip.gridx = 0;
+		gbc_lblTip.gridy = 1;
+		gbc_lblTip.gridwidth = 2;
+		panelBoxa.add(lblTip, gbc_lblTip);
 		
 		JComboBox comboBox = new JComboBox();
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				switch((VrstaKomponente)comboBox.getSelectedItem())
+				{
+				case SPINNER:
+					lblGornjaGranica.setVisible(true);
+					textField_1.setVisible(true);
+					lblNewLabel.setVisible(true);
+					textField_2.setVisible(true);
+					break;
+				default:
+					lblGornjaGranica.setVisible(false);
+					textField_1.setVisible(false);
+					lblNewLabel.setVisible(false);
+					textField_2.setVisible(false);
+					break;
+				}
+			}
+		});
 		comboBox.setModel(new DefaultComboBoxModel(VrstaKomponente.values()));
-		panelBoxa.add(comboBox);
+		GridBagConstraints gbc_comboBox = new GridBagConstraints();
+		gbc_comboBox.fill = GridBagConstraints.BOTH;
+		gbc_comboBox.insets = new Insets(0, 0, 5, 0);
+		gbc_comboBox.gridx = 2;
+		gbc_comboBox.gridy = 1;
+		gbc_comboBox.gridwidth = 2;
+		panelBoxa.add(comboBox, gbc_comboBox);
+		
+		lblGornjaGranica = new JLabel("Gornja granica");
+		lblGornjaGranica.setVisible(false);
+		GridBagConstraints gbc_lblGornjaGranica = new GridBagConstraints();
+		gbc_lblGornjaGranica.insets = new Insets(0, 0, 0, 5);
+		gbc_lblGornjaGranica.anchor = GridBagConstraints.EAST;
+		gbc_lblGornjaGranica.gridx = 0;
+		gbc_lblGornjaGranica.gridy = 2;
+		panelBoxa.add(lblGornjaGranica, gbc_lblGornjaGranica);
+		
+		textField_1 = new JTextField();
+		textField_1.setVisible(false);
+		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
+		gbc_textField_1.fill = GridBagConstraints.BOTH;
+		gbc_textField_1.insets = new Insets(0, 0, 0, 5);
+		gbc_textField_1.gridx = 1;
+		gbc_textField_1.gridy = 2;
+		panelBoxa.add(textField_1, gbc_textField_1);
+		textField_1.setColumns(10);
+		
+		lblNewLabel = new JLabel("Donja granica");
+		lblNewLabel.setVisible(false);
+		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+		gbc_lblNewLabel.anchor = GridBagConstraints.EAST;
+		gbc_lblNewLabel.insets = new Insets(0, 0, 0, 5);
+		gbc_lblNewLabel.gridx = 2;
+		gbc_lblNewLabel.gridy = 2;
+		panelBoxa.add(lblNewLabel, gbc_lblNewLabel);
+		
+		textField_2 = new JTextField();
+		textField_2.setVisible(false);
+		GridBagConstraints gbc_textField_2 = new GridBagConstraints();
+		gbc_textField_2.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_2.gridx = 3;
+		gbc_textField_2.gridy = 2;
+		panelBoxa.add(textField_2, gbc_textField_2);
+		textField_2.setColumns(10);
 		
 		JPanel panelButtona = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panelButtona.getLayout();
@@ -58,6 +154,24 @@ public class NewCompChoice extends JFrame{
 				{
 				case TEXTFIELD:
 					window.postaviTextField(comp);
+					break;
+				case SPINNER:
+					try
+					{
+						comp = new SpinnerKomponenta(textField.getText(), (VrstaKomponente)comboBox.getSelectedItem(), Integer.parseInt(textField_1.getText()), Integer.parseInt(textField_2.getText()));
+					}catch (NumberFormatException ex)
+					{
+						System.out.println("Lose vrednosti");
+						return;
+					}
+					if (Integer.parseInt(textField_1.getText()) < Integer.parseInt(textField_2.getText()))
+					{
+						System.out.println("Gornja mora biti veca od donje");
+						return;
+					}
+					
+					window.postaviSpinner((SpinnerKomponenta)comp);
+					break;
 				}
 				
 				single_instance = null;
