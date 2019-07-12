@@ -172,6 +172,13 @@ public class NewCompChoice extends JFrame{
 					
 					window.postaviSpinner((SpinnerKomponenta)comp);
 					break;
+				case RADIOGROUP:
+					window.postaviRadioButtonGroup(comp);
+					break;
+					
+				case CHECKGROUP:
+					window.postaviCheckboxGroup(comp);
+					break;
 				}
 				
 				single_instance = null;

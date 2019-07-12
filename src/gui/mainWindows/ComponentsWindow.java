@@ -24,6 +24,9 @@ import gui.popUps.NewCompChoice;
 import model.Data;
 import model.komponente.Komponenta;
 import model.komponente.SpinnerKomponenta;
+import paneli.CheckBoxGroup;
+import paneli.Spinner;
+import paneli.TextField;
 
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
@@ -109,78 +112,73 @@ public class ComponentsWindow extends JFrame{
 	
 	public void postaviTextField(Komponenta comp)
 	{
-		JPanel pnl = new JPanel();
-		JTextField fild = new JTextField(30);
-		fild.setEditable(false);
-		fild.addMouseListener(new MouseAdapter() {
+		JTextField jTextField = new JTextField();
+		TextField textField = new TextField(comp, jTextField);
+		jTextField.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-            	ComponentsWindow.this.setSeleckija(pnl);
+            	ComponentsWindow.this.setSeleckija(textField);
             }
         });
 		//data.getDokument().getKomponente().add(comp);
-		pnl.add(new JLabel(comp.getNaziv()));
-		pnl.add(fild);
-		pnl.addMouseListener(new MouseAdapter() {
+		textField.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-            	ComponentsWindow.this.setSeleckija(pnl);
+            	ComponentsWindow.this.setSeleckija(textField);
             }
         });
-		panelKomponenti.add(pnl, -1);
+		panelKomponenti.add(textField, -1);
 		panelKomponenti.revalidate();
 	}
 	
 	public void postaviSpinner(SpinnerKomponenta comp)
 	{
-		JPanel pnl = new JPanel();
-		JSpinner spinner = new JSpinner();
-		spinner.setEnabled(false);
-		spinner.setValue(comp.getDonjaGranica());
+		JSpinner jSpinner = new JSpinner();
+		Spinner spinner = new Spinner(comp, jSpinner);
 		spinner.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-            	ComponentsWindow.this.setSeleckija(pnl);
+            	ComponentsWindow.this.setSeleckija(spinner);
             }
         });
 		//data.getDokument().getKomponente().add(comp);
-		pnl.add(new JLabel(comp.getNaziv()));
-		pnl.add(new JLabel("Gornja granica:"));
-		pnl.add(new JLabel(String.valueOf(comp.getGornjaGranica())));
-		pnl.add(new JLabel("Donja granica:"));
-		pnl.add(new JLabel(String.valueOf(comp.getDonjaGranica())));
-		pnl.add(spinner);
-		pnl.addMouseListener(new MouseAdapter() {
+		spinner.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-            	ComponentsWindow.this.setSeleckija(pnl);
+            	ComponentsWindow.this.setSeleckija(spinner);
             }
         });
-		panelKomponenti.add(pnl, -1);
+		panelKomponenti.add(spinner, -1);
 		panelKomponenti.revalidate();
 	}
 	
 	public void postaviCheckboxGroup(Komponenta comp)
 	{
-		JPanel pnl = new JPanel();
-		JTextField fild = new JTextField(30);
-		fild.setEditable(false);
-		fild.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-            	ComponentsWindow.this.setSeleckija(pnl);
-            }
-        });
+		ButtonGroup group = new ButtonGroup();
+		CheckBoxGroup checkBox = new CheckBoxGroup(comp, group);
 		//data.getDokument().getKomponente().add(comp);
-		pnl.add(new JLabel(comp.getNaziv()));
-		pnl.add(fild);
-		pnl.addMouseListener(new MouseAdapter() {
+		checkBox.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-            	ComponentsWindow.this.setSeleckija(pnl);
+            	ComponentsWindow.this.setSeleckija(checkBox);
             }
         });
-		panelKomponenti.add(pnl, -1);
+		panelKomponenti.add(checkBox, -1);
+		panelKomponenti.revalidate();
+	}
+	
+	public void postaviRadioButtonGroup(Komponenta comp)
+	{
+		ButtonGroup group = new ButtonGroup();
+		CheckBoxGroup radioGroup = new CheckBoxGroup(comp, group);
+		//data.getDokument().getKomponente().add(comp);
+		radioGroup.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+            	ComponentsWindow.this.setSeleckija(radioGroup);
+            }
+        });
+		panelKomponenti.add(radioGroup, -1);
 		panelKomponenti.revalidate();
 	}
 
