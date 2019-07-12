@@ -37,6 +37,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JList;
+import javax.swing.JScrollPane;
 
 public class EditComp extends JFrame{
 	public static EditComp single_instance = null;
@@ -51,6 +52,7 @@ public class EditComp extends JFrame{
 	private JButton btnObrisi_1;
 	DefaultListModel listModel;
 	Panel selektovan;
+	private JScrollPane scrollPane;
 	
 	private EditComp(ComponentsWindow window) {
 		setResizable(false);
@@ -129,6 +131,12 @@ public class EditComp extends JFrame{
 		textField_2.setColumns(10);
 		
 		btnDodaj_1 = new JButton("Dodaj");
+		btnDodaj_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				NewSubComp ncc = NewSubComp.getInstance(EditComp.this);
+				ncc.setVisible(true);
+			}
+		});
 		GridBagConstraints gbc_btnDodaj_1 = new GridBagConstraints();
 		gbc_btnDodaj_1.gridwidth = 2;
 		gbc_btnDodaj_1.insets = new Insets(0, 0, 5, 5);
@@ -136,7 +144,18 @@ public class EditComp extends JFrame{
 		gbc_btnDodaj_1.gridy = 2;
 		panelBoxa.add(btnDodaj_1, gbc_btnDodaj_1);
 		
+		scrollPane = new JScrollPane();
+		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+		gbc_scrollPane.gridwidth = 2;
+		gbc_scrollPane.gridheight = 2;
+		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
+		gbc_scrollPane.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane.gridx = 2;
+		gbc_scrollPane.gridy = 2;
+		panelBoxa.add(scrollPane, gbc_scrollPane);
+		
 		list_1 = new JList(listModel);
+		scrollPane.setViewportView(list_1);
 		list_1.addListSelectionListener(new ListSelectionListener() {
 
             @Override
@@ -153,13 +172,6 @@ public class EditComp extends JFrame{
                 }
             }
         });
-		GridBagConstraints gbc_list_1 = new GridBagConstraints();
-		gbc_list_1.gridwidth = 2;
-		gbc_list_1.gridheight = 2;
-		gbc_list_1.fill = GridBagConstraints.BOTH;
-		gbc_list_1.gridx = 2;
-		gbc_list_1.gridy = 2;
-		panelBoxa.add(list_1, gbc_list_1);
 		list_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		btnObrisi_1 = new JButton("Obrisi");
@@ -196,7 +208,20 @@ public class EditComp extends JFrame{
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				panel.getKomponenta().setNaziv(textField.getText());
 				
+				if (panel instanceof Spinner)
+				{
+					try
+					{
+						((SpinnerKomponenta)panel.getKomponenta()).setDonjaGranica(Integer.parseInt(textField_1.getText()));
+						((SpinnerKomponenta)panel.getKomponenta()).setDonjaGranica(Integer.parseInt(textField_2.getText()));
+					}catch(NumberFormatException ex)
+					{
+						System.out.println("Losi brojevi");
+					}
+				}
+				panel.rerepaint();
 				single_instance = null;
 				dispose();
 			}
@@ -275,6 +300,24 @@ public class EditComp extends JFrame{
 		else
 		{
 			btnObrisi_1.setEnabled(true);
+		}
+	}
+	
+	public void DodajPodKomponentu(Panel panel) {
+		
+		if (panel instanceof RadioButton)
+		{
+			((RadioButtonGroup)this.panel).DodajRadioButton((RadioButton)panel);
+			listModel.addElement((RadioButton)panel);
+		}
+		else if (panel instanceof CheckBox)
+		{
+			((CheckBoxGroup)this.panel).DodajCheckBox((CheckBox)panel);
+			listModel.addElement((CheckBox)panel);
+		}
+		else
+		{
+			System.out.println("Nema instance");
 		}
 	}
 
