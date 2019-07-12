@@ -6,13 +6,13 @@ import javax.swing.JTextField;
 
 import model.komponente.Komponenta;
 
-public class TextField extends JPanel {
+public class TextField extends Panel {
 
 	private Komponenta komponenta;
 	private JTextField textField;
 	
 	public TextField(Komponenta komponenta, JTextField textField) {
-		super();
+		super(komponenta);
 		this.komponenta = komponenta;
 		this.textField = textField;
 		//this.textField.setSize(200, 20);

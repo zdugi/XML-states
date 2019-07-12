@@ -5,13 +5,11 @@ import enums.VrstaKomponente;
 public class Komponenta {
 	private String naziv;
 	private String komponentaId;
-	private VrstaKomponente tip;
 	
-	 public Komponenta(String naziv, VrstaKomponente tip)
+	 public Komponenta(String naziv)
 	 {
 		 this.naziv = naziv;
-		 this.tip = tip;
-		 this.komponentaId = naziv + tip;
+		 this.komponentaId = naziv;
 	 }
 	   
 	public String getNaziv() {
@@ -25,11 +23,5 @@ public class Komponenta {
 	}
 	public void setKomponentaId(String komponentaId) {
 		this.komponentaId = komponentaId;
-	}
-	public VrstaKomponente getTip() {
-		return tip;
-	}
-	public void setTip(VrstaKomponente tip) {
-		this.tip = tip;
 	}
 }

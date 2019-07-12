@@ -7,13 +7,13 @@ import javax.swing.JSpinner;
 import model.komponente.Komponenta;
 import model.komponente.SpinnerKomponenta;
 
-public class Spinner extends JPanel {
+public class Spinner extends Panel {
 
 	private Komponenta komponenta;
 	private JSpinner spinner;
 
 	public Spinner(SpinnerKomponenta komponenta, JSpinner spinner) {
-		super();
+		super(komponenta);
 		this.komponenta = komponenta;
 		this.spinner = spinner;
 		add(new JLabel(komponenta.getNaziv()));

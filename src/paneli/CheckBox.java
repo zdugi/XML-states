@@ -5,13 +5,13 @@ import javax.swing.JPanel;
 
 import model.komponente.Komponenta;
 
-public class CheckBox extends JPanel {
+public class CheckBox extends Panel {
 
 	private Komponenta komponenta;
 	private JCheckBox checkBox;
 	
 	public CheckBox(Komponenta komponenta, JCheckBox checkBox) {
-		super();
+		super(komponenta);
 		this.komponenta = komponenta;
 		this.checkBox = checkBox;
 		this.checkBox.setText(komponenta.getNaziv());

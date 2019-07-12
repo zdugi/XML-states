@@ -21,10 +21,12 @@ import javax.swing.border.LineBorder;
 
 import enums.VrstaKomponente;
 import gui.popUps.NewCompChoice;
+import gui.popUps.NewSubComp;
 import model.Data;
 import model.komponente.Komponenta;
 import model.komponente.SpinnerKomponenta;
 import paneli.CheckBoxGroup;
+import paneli.Panel;
 import paneli.Spinner;
 import paneli.TextField;
 
@@ -36,7 +38,7 @@ import javax.swing.JCheckBox;
 public class ComponentsWindow extends JFrame{
 	JPanel panelKomponenti;
 	private ArrayList<JPanel> paneli;
-	private JPanel selekcija;
+	private Panel selekcija;
 	JButton btnEditComponent;
 	JButton btnDeleteComponent;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
@@ -62,6 +64,12 @@ public class ComponentsWindow extends JFrame{
 		toolBar.add(btnAddComponent);
 		
 		btnEditComponent = new JButton("Edit component");
+		btnEditComponent.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				NewSubComp ncc = NewSubComp.getInstance(ComponentsWindow.this);
+				ncc.setVisible(true);
+			}
+		});
 		btnEditComponent.setEnabled(false);
 		toolBar.add(btnEditComponent);
 		
@@ -182,7 +190,7 @@ public class ComponentsWindow extends JFrame{
 		panelKomponenti.revalidate();
 	}
 
-	public void setSeleckija(JPanel panel) {
+	public void setSeleckija(Panel panel) {
 		if (this.selekcija != null)
 			this.selekcija.setBorder(null);
 		
@@ -199,6 +207,10 @@ public class ComponentsWindow extends JFrame{
 			btnEditComponent.setEnabled(false);
 			btnDeleteComponent.setEnabled(false);
 		}
+	}
+	
+	public Panel getSelekcija() {
+		return this.selekcija;
 	}
 	
 	public void obrisi()

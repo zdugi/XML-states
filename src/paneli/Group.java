@@ -6,13 +6,13 @@ import javax.swing.JPanel;
 
 import model.komponente.Komponenta;
 
-public class Group extends JPanel {
+public class Group extends Panel {
 
 	private Komponenta komponenta;
 	private ButtonGroup buttonGroup;
 	
 	public Group(Komponenta komponenta, ButtonGroup buttonGroup) {
-		super();
+		super(komponenta);
 		this.komponenta = komponenta;
 		this.buttonGroup = buttonGroup;
 		add(new JLabel(komponenta.getNaziv()));

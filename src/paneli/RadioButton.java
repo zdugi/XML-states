@@ -7,13 +7,13 @@ import javax.swing.JTextField;
 
 import model.komponente.Komponenta;
 
-public class RadioButton extends JPanel {
+public class RadioButton extends Panel {
 
 	private Komponenta komponenta;
 	private JRadioButton radioButton;
 	
 	public RadioButton(Komponenta komponenta, JRadioButton button) {
-		super();
+		super(komponenta);
 		this.komponenta = komponenta;
 		this.radioButton = button;
 		this.radioButton.setText(komponenta.getNaziv());
