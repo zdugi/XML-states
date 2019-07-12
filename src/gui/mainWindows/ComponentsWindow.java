@@ -1,17 +1,23 @@
 package gui.mainWindows;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
+import javax.swing.border.LineBorder;
 
 import enums.VrstaKomponente;
 import gui.popUps.NewCompChoice;
@@ -20,8 +26,11 @@ import model.komponente.Komponenta;
 
 public class ComponentsWindow extends JFrame{
 	JPanel panelKomponenti;
+	private ArrayList<JPanel> paneli;
+	private JPanel selekcija;
+	
 	public ComponentsWindow(Data data) {
-		
+		paneli = new ArrayList<JPanel>();
 		this.setSize(1200, 800);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -34,9 +43,8 @@ public class ComponentsWindow extends JFrame{
 		btnAddComponent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Komponenta comp = null;
-				NewCompChoice ncc = NewCompChoice.getInstance(panelKomponenti);
+				NewCompChoice ncc = NewCompChoice.getInstance(ComponentsWindow.this);
 				ncc.setVisible(true);
-				
 			}
 		});
 		toolBar.add(btnAddComponent);
@@ -79,15 +87,39 @@ public class ComponentsWindow extends JFrame{
 		panelAkcija.add(btnNewButton_4);
 	}
 	
-	public static void postaviTextField(JPanel con, Komponenta comp)
+	public void postaviTextField(Komponenta comp)
 	{
 		JPanel pnl = new JPanel();
 		JTextField fild = new JTextField(30);
 		fild.setEditable(false);
+		fild.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+            	ComponentsWindow.this.setSeleckija(pnl);
+            }
+        });
 		//data.getDokument().getKomponente().add(comp);
 		pnl.add(new JLabel(comp.getNaziv()));
 		pnl.add(fild);
-		con.add(pnl, -1);
-		con.revalidate();
+		pnl.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+            	ComponentsWindow.this.setSeleckija(pnl);
+            }
+        });
+		panelKomponenti.add(pnl, -1);
+		panelKomponenti.revalidate();
+	}
+	
+	public void setSeleckija(JPanel panel) {
+		if (this.selekcija != null)
+			this.selekcija.setBorder(null);
+		
+		this.selekcija = panel;
+		
+		if (this.selekcija != null)
+		{
+			this.selekcija.setBorder(BorderFactory.createLineBorder(Color.red));
+		}
 	}
 }

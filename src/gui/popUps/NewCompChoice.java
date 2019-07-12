@@ -19,10 +19,10 @@ import gui.mainWindows.ComponentsWindow;
 import model.komponente.Komponenta;
 
 public class NewCompChoice extends JFrame{
-	private static NewCompChoice single_instance = null;
+	public static NewCompChoice single_instance = null;
 	private JTextField textField;
-	
-	private NewCompChoice(JPanel con) {
+	Komponenta comp;
+	private NewCompChoice(ComponentsWindow window) {
 		
 		this.setSize(300, 140);
 		this.setLocationRelativeTo(null);
@@ -53,11 +53,11 @@ public class NewCompChoice extends JFrame{
 		JButton btnNext = new JButton("Next");
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Komponenta comp = new Komponenta(textField.getText(), (VrstaKomponente)comboBox.getSelectedItem());
+				comp = new Komponenta(textField.getText(), (VrstaKomponente)comboBox.getSelectedItem());
 				switch((VrstaKomponente)comboBox.getSelectedItem())
 				{
 				case TEXTFIELD:
-					ComponentsWindow.postaviTextField(con, comp);
+					window.postaviTextField(comp);
 				}
 				
 				single_instance = null;
@@ -76,18 +76,19 @@ public class NewCompChoice extends JFrame{
 		panelButtona.add(btnCancel);
 	}
 	
-	public static NewCompChoice getInstance(JPanel con) 
+	public static NewCompChoice getInstance(ComponentsWindow window) 
     { 
         if (single_instance == null) 
-            single_instance = new NewCompChoice(con); 
+            single_instance = new NewCompChoice(window); 
   
         return single_instance; 
     }
 	
-	public Komponenta getKomponentu(Komponenta comp)
+	public Komponenta getKomponentu()
 	{
 		return comp;
 	}
+	
 	/*public void postaviTextField(JPanel panel)
 	{
 		JPanel pnl = new JPanel();

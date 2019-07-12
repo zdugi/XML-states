@@ -32,6 +32,4 @@ public class Komponenta {
 	public void setTip(VrstaKomponente tip) {
 		this.tip = tip;
 	}
-	   
-	   
 }
