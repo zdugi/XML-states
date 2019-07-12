@@ -10,13 +10,16 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import enums.VrstaKomponente;
 import gui.mainWindows.ComponentsWindow;
+import main.MainTest;
 import model.komponente.Komponenta;
 import model.komponente.SpinnerKomponenta;
 import java.awt.GridBagLayout;
@@ -150,39 +153,110 @@ public class NewCompChoice extends JFrame{
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				comp = new Komponenta(textField.getText());
+				for(Komponenta k : MainTest.data.getDokument().getKomponente())
+				{
+					if(k.getKomponentaId().equals(comp.getKomponentaId()))
+					{
+						JOptionPane.showMessageDialog(new JDialog(),
+							    "Ime komponente svakog tipa mora biti jedinstveno",
+							    "Add failure",
+							    JOptionPane.ERROR_MESSAGE);
+						return;
+					}		
+				}
 				switch((VrstaKomponente)comboBox.getSelectedItem())
 				{
 				case TEXTFIELD:
-					window.postaviTextField(comp);
+					if(!textField.getText().equals(""))
+					{
+						window.postaviTextField(comp);
+						single_instance = null;
+						dispose();
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(new JDialog(),
+							    "Ime komponente se mora uneti",
+							    "Add failure",
+							    JOptionPane.ERROR_MESSAGE);
+					}
 					break;
 				case SPINNER:
-					try
+					if(!textField.getText().equals(""))
 					{
-						comp = new SpinnerKomponenta(textField.getText(), (VrstaKomponente)comboBox.getSelectedItem(), Integer.parseInt(textField_1.getText()), Integer.parseInt(textField_2.getText()));
-					}catch (NumberFormatException ex)
-					{
-						System.out.println("Lose vrednosti");
-						return;
+						try
+						{
+							if (Integer.parseInt(textField_1.getText()) < Integer.parseInt(textField_2.getText()))
+							{
+								JOptionPane.showMessageDialog(new JDialog(),
+									    "Gornja granica mora bitiveca od donje",
+									    "Add failure",
+									    JOptionPane.ERROR_MESSAGE);
+								return;
+							}
+							else
+							{
+								comp = new SpinnerKomponenta(textField.getText(), (VrstaKomponente)comboBox.getSelectedItem(), Integer.parseInt(textField_1.getText()), Integer.parseInt(textField_2.getText()));
+								window.postaviSpinner((SpinnerKomponenta)comp);
+								single_instance = null;
+								dispose();
+							}
+						}catch (NumberFormatException ex)
+						{
+							JOptionPane.showMessageDialog(new JDialog(),
+								    "Lose vrednosti, moraju se uneti brojevi",
+								    "Add failure",
+								    JOptionPane.ERROR_MESSAGE);
+							return;
+						}
 					}
-					if (Integer.parseInt(textField_1.getText()) < Integer.parseInt(textField_2.getText()))
+					else
 					{
-						System.out.println("Gornja mora biti veca od donje");
-						return;
+						JOptionPane.showMessageDialog(new JDialog(),
+							    "Ime komponente se mora uneti",
+							    "Add failure",
+							    JOptionPane.ERROR_MESSAGE);
 					}
-					
-					window.postaviSpinner((SpinnerKomponenta)comp);
 					break;
 				case RADIOGROUP:
-					window.postaviRadioButtonGroup(comp);
+					if(!textField.getText().equals(""))
+					{
+						window.postaviRadioButtonGroup(comp);
+						single_instance = null;
+						dispose();
+						EditComp ncc = EditComp.getInstance(window);
+						ncc.setVisible(true);
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(new JDialog(),
+							    "Ime komponente se mora uneti",
+							    "Add failure",
+							    JOptionPane.ERROR_MESSAGE);
+					}
 					break;
 					
 				case CHECKGROUP:
-					window.postaviCheckboxGroup(comp);
+					if(!textField.getText().equals(""))
+					{
+						window.postaviCheckboxGroup(comp);
+						single_instance = null;
+						dispose();
+						EditComp ncc = EditComp.getInstance(window);
+						ncc.setVisible(true);
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(new JDialog(),
+							    "Ime komponente se mora uneti",
+							    "Add failure",
+							    JOptionPane.ERROR_MESSAGE);
+					}
 					break;
 				}
 				
-				single_instance = null;
-				dispose();
+				//single_instance = null;
+				//dispose();
 			}
 		});
 		panelButtona.add(btnNext);

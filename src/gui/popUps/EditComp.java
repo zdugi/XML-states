@@ -210,17 +210,22 @@ public class EditComp extends JFrame{
 				
 				panel.getKomponenta().setNaziv(textField.getText());
 				
+				
 				if (panel instanceof Spinner)
 				{
 					try
 					{
-						((SpinnerKomponenta)panel.getKomponenta()).setDonjaGranica(Integer.parseInt(textField_1.getText()));
 						((SpinnerKomponenta)panel.getKomponenta()).setDonjaGranica(Integer.parseInt(textField_2.getText()));
+						((SpinnerKomponenta)panel.getKomponenta()).setGornjaGranica(Integer.parseInt(textField_1.getText()));
+						((Spinner) panel).setDg();
+						((Spinner) panel).setGg();
 					}catch(NumberFormatException ex)
 					{
 						System.out.println("Losi brojevi");
 					}
 				}
+				panel.setNazivLbl();
+				//window.refreshPanelOnEdit(panel);
 				panel.rerepaint();
 				single_instance = null;
 				dispose();

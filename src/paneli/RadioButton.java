@@ -9,14 +9,14 @@ import model.komponente.Komponenta;
 
 public class RadioButton extends Panel {
 
-	private Komponenta komponenta;
+	//private Komponenta komponenta;
 	private JRadioButton radioButton;
 	
 	public RadioButton(Komponenta komponenta, JRadioButton button) {
 		super(komponenta);
-		this.komponenta = komponenta;
+		//this.komponenta = komponenta;
 		this.radioButton = button;
-		this.radioButton.setText(komponenta.getNaziv());
+		//this.radioButton.setText(komponenta.getNaziv());
 		add(radioButton);
 	}
 
@@ -34,5 +34,10 @@ public class RadioButton extends Panel {
 
 	public void setRadioButton(JRadioButton radioButton) {
 		this.radioButton = radioButton;
+	}
+	
+	public String toString()
+	{
+		return komponenta.getNaziv();
 	}
 }
