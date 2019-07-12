@@ -8,12 +8,14 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 
 import enums.VrstaKomponente;
 import enums.VrstaPodkomponente;
@@ -43,12 +45,16 @@ public class EditComp extends JFrame{
 	private JList list_1;
 	private JButton btnDodaj_1;
 	private JButton btnObrisi_1;
+	DefaultListModel listModel;
+	
 	private EditComp(ComponentsWindow window) {
 		setResizable(false);
 		this.panel = window.getSelekcija();
 		
 		this.setSize(466, 302);
 		this.setLocationRelativeTo(null);
+		
+		listModel = new DefaultListModel();
 		
 		JPanel panelBoxa = new JPanel();
 		panelBoxa.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -125,7 +131,7 @@ public class EditComp extends JFrame{
 		gbc_btnDodaj_1.gridy = 2;
 		panelBoxa.add(btnDodaj_1, gbc_btnDodaj_1);
 		
-		list_1 = new JList();
+		list_1 = new JList(listModel);
 		GridBagConstraints gbc_list_1 = new GridBagConstraints();
 		gbc_list_1.gridwidth = 2;
 		gbc_list_1.gridheight = 2;
@@ -133,6 +139,7 @@ public class EditComp extends JFrame{
 		gbc_list_1.gridx = 2;
 		gbc_list_1.gridy = 2;
 		panelBoxa.add(list_1, gbc_list_1);
+		list_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		btnObrisi_1 = new JButton("Obrisi");
 		GridBagConstraints gbc_btnObrisi_1 = new GridBagConstraints();
@@ -173,6 +180,11 @@ public class EditComp extends JFrame{
 			textField_2.setVisible(false);
 			lblGornjaGranica.setVisible(false);
 			lblNewLabel.setVisible(false);
+			btnDodaj_1.setVisible(true);
+			btnObrisi_1.setVisible(true);
+			list_1.setVisible(true);
+			
+			
 		}
 		else if (panel instanceof TextField)
 		{
@@ -180,13 +192,22 @@ public class EditComp extends JFrame{
 			textField_2.setVisible(false);
 			lblGornjaGranica.setVisible(false);
 			lblNewLabel.setVisible(false);
+			btnDodaj_1.setVisible(false);
+			btnObrisi_1.setVisible(false);
+			list_1.setVisible(false);
 		}
 		else if (panel instanceof Spinner)
 		{
-			textField_1.setVisible(false);
-			textField_2.setVisible(false);
-			lblGornjaGranica.setVisible(false);
-			lblNewLabel.setVisible(false);
+			textField_1.setVisible(true);
+			textField_2.setVisible(true);
+			lblGornjaGranica.setVisible(true);
+			lblNewLabel.setVisible(true);
+			btnDodaj_1.setVisible(false);
+			btnObrisi_1.setVisible(false);
+			list_1.setVisible(false);
+			
+			textField_1.setText(String.valueOf(((SpinnerKomponenta)panel.getKomponenta()).getGornjaGranica()));
+			textField_2.setText(String.valueOf(((SpinnerKomponenta)panel.getKomponenta()).getDonjaGranica()));
 		}
 		else
 		{

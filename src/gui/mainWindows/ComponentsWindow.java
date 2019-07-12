@@ -20,6 +20,7 @@ import javax.swing.JToolBar;
 import javax.swing.border.LineBorder;
 
 import enums.VrstaKomponente;
+import gui.popUps.EditComp;
 import gui.popUps.NewCompChoice;
 import gui.popUps.NewSubComp;
 import model.Data;
@@ -66,7 +67,7 @@ public class ComponentsWindow extends JFrame{
 		btnEditComponent = new JButton("Edit component");
 		btnEditComponent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				NewSubComp ncc = NewSubComp.getInstance(ComponentsWindow.this);
+				EditComp ncc = EditComp.getInstance(ComponentsWindow.this);
 				ncc.setVisible(true);
 			}
 		});
