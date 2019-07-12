@@ -82,11 +82,11 @@ public class NewSubComp extends JFrame{
 				
 				if (window.panel instanceof RadioButtonGroup)
 				{
-					panel = new RadioButton(new Komponenta(textField.getText()), new JRadioButton());
+					panel = new RadioButton(new Komponenta(textField.getText(), VrstaKomponente.SUBCOMPONENT), new JRadioButton());
 				}
 				else if (window.panel instanceof CheckBoxGroup)
 				{
-					panel = new CheckBox(new Komponenta(textField.getText()), new JCheckBox());
+					panel = new CheckBox(new Komponenta(textField.getText(), VrstaKomponente.SUBCOMPONENT ), new JCheckBox());
 				}
 				window.DodajPodKomponentu(panel);
 				single_instance = null;

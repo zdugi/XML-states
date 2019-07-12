@@ -33,4 +33,9 @@ public class CheckBox extends Panel {
 	public void setCheckBox(JCheckBox checkBox) {
 		this.checkBox = checkBox;
 	}
+	
+	public String toString()
+	{
+		return komponenta.getNaziv();
+	}
 }

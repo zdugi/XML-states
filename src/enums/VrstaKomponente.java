@@ -4,5 +4,6 @@ public enum VrstaKomponente {
 	   TEXTFIELD,
 	   RADIOGROUP,
 	   CHECKGROUP,
-	   SPINNER;
+	   SPINNER,
+	   SUBCOMPONENT;
 }

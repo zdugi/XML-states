@@ -2,7 +2,9 @@ package gui.popUps;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -20,11 +22,9 @@ import javax.swing.JTextField;
 import enums.VrstaKomponente;
 import gui.mainWindows.ComponentsWindow;
 import main.MainTest;
+import model.komponente.GroupKomponenta;
 import model.komponente.Komponenta;
 import model.komponente.SpinnerKomponenta;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 
 public class NewCompChoice extends JFrame{
 	public static NewCompChoice single_instance = null;
@@ -99,6 +99,7 @@ public class NewCompChoice extends JFrame{
 			}
 		});
 		comboBox.setModel(new DefaultComboBoxModel(VrstaKomponente.values()));
+		comboBox.removeItemAt(4);
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.fill = GridBagConstraints.BOTH;
 		gbc_comboBox.insets = new Insets(0, 0, 5, 0);
@@ -152,7 +153,7 @@ public class NewCompChoice extends JFrame{
 		JButton btnNext = new JButton("Next");
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				comp = new Komponenta(textField.getText());
+				comp = new Komponenta(textField.getText(), (VrstaKomponente)comboBox.getSelectedItem());
 				for(Komponenta k : MainTest.data.getDokument().getKomponente())
 				{
 					if(k.getKomponentaId().equals(comp.getKomponentaId()))
@@ -221,7 +222,8 @@ public class NewCompChoice extends JFrame{
 				case RADIOGROUP:
 					if(!textField.getText().equals(""))
 					{
-						window.postaviRadioButtonGroup(comp);
+						comp = new GroupKomponenta(textField.getText(), (VrstaKomponente)comboBox.getSelectedItem());
+						window.postaviRadioButtonGroup((GroupKomponenta) comp);
 						single_instance = null;
 						dispose();
 						EditComp ncc = EditComp.getInstance(window);
@@ -239,7 +241,8 @@ public class NewCompChoice extends JFrame{
 				case CHECKGROUP:
 					if(!textField.getText().equals(""))
 					{
-						window.postaviCheckboxGroup(comp);
+						comp = new GroupKomponenta(textField.getText(), (VrstaKomponente)comboBox.getSelectedItem());
+						window.postaviCheckboxGroup((GroupKomponenta) comp);
 						single_instance = null;
 						dispose();
 						EditComp ncc = EditComp.getInstance(window);
