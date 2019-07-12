@@ -1,3 +1,5 @@
+package main;
+
 import javax.swing.JComponent;
 
 import gui.mainWindows.ComponentsWindow;

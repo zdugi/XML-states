@@ -7,14 +7,14 @@ import model.komponente.Komponenta;
 
 public class CheckBox extends Panel {
 
-	private Komponenta komponenta;
+	//private Komponenta komponenta;
 	private JCheckBox checkBox;
 	
 	public CheckBox(Komponenta komponenta, JCheckBox checkBox) {
 		super(komponenta);
-		this.komponenta = komponenta;
+		//this.komponenta = komponenta;
 		this.checkBox = checkBox;
-		this.checkBox.setText(komponenta.getNaziv());
+		//this.checkBox.setText(komponenta.getNaziv());
 		add(checkBox);
 	}
 

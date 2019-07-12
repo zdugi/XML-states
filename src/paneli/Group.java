@@ -15,7 +15,7 @@ public class Group extends Panel {
 		super(komponenta);
 		this.komponenta = komponenta;
 		this.buttonGroup = buttonGroup;
-		add(new JLabel(komponenta.getNaziv()));
+		//add(new JLabel(komponenta.getNaziv()));
 	}
 
 	public Komponenta getKomponenta() {

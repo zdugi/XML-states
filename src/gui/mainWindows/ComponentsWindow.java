@@ -11,33 +11,25 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
-import javax.swing.border.LineBorder;
 
-import enums.VrstaKomponente;
 import gui.popUps.EditComp;
 import gui.popUps.NewCompChoice;
-import gui.popUps.NewSubComp;
+import main.MainTest;
 import model.Data;
 import model.komponente.Komponenta;
 import model.komponente.SpinnerKomponenta;
-import paneli.CheckBox;
 import paneli.CheckBoxGroup;
 import paneli.Panel;
-import paneli.RadioButton;
 import paneli.RadioButtonGroup;
 import paneli.Spinner;
 import paneli.TextField;
-
-import javax.swing.JRadioButton;
-import javax.swing.JSpinner;
-import javax.swing.ButtonGroup;
-import javax.swing.JCheckBox;
 
 public class ComponentsWindow extends JFrame{
 	JPanel panelKomponenti;
@@ -89,7 +81,7 @@ public class ComponentsWindow extends JFrame{
 		panelKomponenti = new JPanel();
 		panelKomponenti.setAlignmentX(LEFT_ALIGNMENT);
 		getContentPane().add(panelKomponenti, BorderLayout.CENTER);
-		panelKomponenti.setLayout(new GridLayout(4, 0, 0, 0));
+		panelKomponenti.setLayout(new GridLayout(10, 0, 0, 0));
 		panelKomponenti.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -100,33 +92,18 @@ public class ComponentsWindow extends JFrame{
 		JPanel panelNastavka = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panelNastavka.getLayout();
 		flowLayout.setAlignment(FlowLayout.RIGHT);
+		panelNastavka.setBorder(BorderFactory.createLineBorder(Color.black));
 		getContentPane().add(panelNastavka, BorderLayout.SOUTH);
 		
 		JButton btnSaveAndNext = new JButton("Save and continue");
+
 		btnSaveAndNext.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					nextProzor();
 				}
-		
 		});
 		panelNastavka.add(btnSaveAndNext);
-		
-		JPanel panelAkcija = new JPanel();
-		getContentPane().add(panelAkcija, BorderLayout.EAST);
-		panelAkcija.setLayout(new GridLayout(4, 1, 0, 0));
-		
-		JButton btnNewButton_1 = new JButton("Save");
-		panelAkcija.add(btnNewButton_1);
-		
-		JButton btnNewButton_2 = new JButton("Submit");
-		panelAkcija.add(btnNewButton_2);
-		
-		JButton btnNewButton_3 = new JButton("Reject");
-		panelAkcija.add(btnNewButton_3);
-		
-		JButton btnNewButton_4 = new JButton("Archive");
-		panelAkcija.add(btnNewButton_4);
 	}
 	
 	public void nextProzor()
@@ -137,7 +114,8 @@ public class ComponentsWindow extends JFrame{
 	}
 	public void postaviTextField(Komponenta comp)
 	{
-		JTextField jTextField = new JTextField();
+		JTextField jTextField = new JTextField(30);
+		jTextField.setEditable(false);
 		TextField textField = new TextField(comp, jTextField);
 		jTextField.addMouseListener(new MouseAdapter() {
             @Override
@@ -145,7 +123,7 @@ public class ComponentsWindow extends JFrame{
             	ComponentsWindow.this.setSeleckija(textField);
             }
         });
-		//data.getDokument().getKomponente().add(comp);
+		MainTest.data.getDokument().getKomponente().add(comp);
 		textField.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -153,12 +131,14 @@ public class ComponentsWindow extends JFrame{
             }
         });
 		panelKomponenti.add(textField, -1);
+		setSeleckija(textField);
 		panelKomponenti.revalidate();
 	}
 	
 	public void postaviSpinner(SpinnerKomponenta comp)
 	{
 		JSpinner jSpinner = new JSpinner();
+		jSpinner.setEnabled(false);
 		Spinner spinner = new Spinner(comp, jSpinner);
 		spinner.addMouseListener(new MouseAdapter() {
             @Override
@@ -166,7 +146,7 @@ public class ComponentsWindow extends JFrame{
             	ComponentsWindow.this.setSeleckija(spinner);
             }
         });
-		//data.getDokument().getKomponente().add(comp);
+		MainTest.data.getDokument().getKomponente().add(comp);
 		spinner.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -174,6 +154,7 @@ public class ComponentsWindow extends JFrame{
             }
         });
 		panelKomponenti.add(spinner, -1);
+		setSeleckija(spinner);
 		panelKomponenti.revalidate();
 	}
 	
@@ -181,7 +162,7 @@ public class ComponentsWindow extends JFrame{
 	{
 		ButtonGroup group = new ButtonGroup();
 		CheckBoxGroup checkBox = new CheckBoxGroup(comp, group);
-		//data.getDokument().getKomponente().add(comp);
+		MainTest.data.getDokument().getKomponente().add(comp);
 		checkBox.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -189,6 +170,7 @@ public class ComponentsWindow extends JFrame{
             }
         });
 		panelKomponenti.add(checkBox, -1);
+		setSeleckija(checkBox);
 		panelKomponenti.revalidate();
 	}
 	
@@ -196,7 +178,7 @@ public class ComponentsWindow extends JFrame{
 	{
 		ButtonGroup group = new ButtonGroup();
 		RadioButtonGroup radioGroup = new RadioButtonGroup(comp, group);
-		//data.getDokument().getKomponente().add(comp);
+		MainTest.data.getDokument().getKomponente().add(comp);
 		radioGroup.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -204,6 +186,7 @@ public class ComponentsWindow extends JFrame{
             }
         });
 		panelKomponenti.add(radioGroup, -1);
+		setSeleckija(radioGroup);
 		panelKomponenti.revalidate();
 	}
 

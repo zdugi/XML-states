@@ -52,7 +52,7 @@ public class NewSubComp extends JFrame{
 		gbl_panelBoxa.rowWeights = new double[]{1.0};
 		panelBoxa.setLayout(gbl_panelBoxa);
 		
-		JLabel lblIme = new JLabel("Ime komponente");
+		JLabel lblIme = new JLabel("Tekst dugmeta");
 		GridBagConstraints gbc_lblIme = new GridBagConstraints();
 		gbc_lblIme.fill = GridBagConstraints.BOTH;
 		gbc_lblIme.insets = new Insets(0, 0, 0, 5);
@@ -75,7 +75,7 @@ public class NewSubComp extends JFrame{
 		flowLayout.setAlignment(FlowLayout.RIGHT);
 		getContentPane().add(panelButtona, BorderLayout.SOUTH);
 		
-		JButton btnNext = new JButton("Change");
+		JButton btnNext = new JButton("OK");
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Panel panel = null;
