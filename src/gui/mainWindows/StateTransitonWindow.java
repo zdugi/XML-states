@@ -42,6 +42,7 @@ public class StateTransitonWindow extends JFrame {
 	
 	JButton btnEdit;
 	JButton btnDelete;
+	JButton btnPostaviInit;
 	JPanel tabelPanel;
 	JPanel grafPanel;
 	JTable states;
@@ -110,6 +111,15 @@ public class StateTransitonWindow extends JFrame {
 		btnDelete.setEnabled(false);
 		toolBar.add(btnDelete);
 		
+		btnPostaviInit = new JButton("Postavi kao INIT");
+		btnPostaviInit.setEnabled(false);
+		btnPostaviInit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				PostaviInit();
+			}
+		});
+		toolBar.add(btnPostaviInit);
+		
 		JButton btnUpisiUFajl = new JButton("Upisi u fajl");
 		btnUpisiUFajl.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -118,9 +128,11 @@ public class StateTransitonWindow extends JFrame {
 		});
 		toolBar.add(btnUpisiUFajl);
 		
+		
+		
 		tabelPanel = new JPanel();
-		getContentPane().add(tabelPanel, BorderLayout.WEST);
-		//getContentPane().add(tabelPanel, BorderLayout.CENTER);
+		//getContentPane().add(tabelPanel, BorderLayout.WEST);
+		getContentPane().add(tabelPanel, BorderLayout.CENTER);
 		tabelPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		tabelPanel.setLayout(new GridLayout(2, 0, 0, 0));
 		JPanel statePanel = new JPanel();
@@ -173,8 +185,51 @@ public class StateTransitonWindow extends JFrame {
 	        }
 	    });
 		
-		grafPanel = new JPanel();
-		getContentPane().add(grafPanel, BorderLayout.CENTER);
+		/*grafPanel = new JPanel();
+		getContentPane().add(grafPanel, BorderLayout.CENTER);*/
+	}
+	
+	private void PostaviInit()
+	{
+		State st = MainTest.data.getStanje().get(states.getSelectedRow());
+		JComponent[] inputs2 = new JComponent[2];
+		inputs2[0] = new JLabel("Dozvoljene Akcije");
+		
+		inputs2[1] = new JComboBox<String>(new DefaultComboBoxModel(TipStanja.values()));
+		int result = JOptionPane.showOptionDialog(null, inputs2, "My custom dialog", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,null, null,null);
+		if(result != 0)
+			return;
+		if(st.getTipStanja() == TipStanja.INITSTATE)
+			return;
+		int index = 0;
+		for(State s : MainTest.data.getStanje())
+		{
+			if(s.getTipStanja() == TipStanja.INITSTATE)
+			{
+				int pom = ((JComboBox)inputs2[1]).getSelectedIndex();
+				if(pom == 0)
+				{
+					JOptionPane.showMessageDialog(null, "Ne mozes posataviti INIT", "Error", JOptionPane.ERROR_MESSAGE);
+					PostaviInit();
+					return;
+				}
+				s.setTipStanja(TipStanja.values()[pom]);
+				s.setStanjeId(s.getNazivStanja() + s.getTipStanja());
+				System.out.println(s.getTipStanja());
+				String []pod = {s.getStanjeId(), s.getNazivStanja(), s.getTipStanja().toString()};
+				dmS.insertRow(index, pod);
+				dmS.removeRow(index + 1);
+				break;
+			}
+			index++;
+		}
+		
+		
+		st.setTipStanja(TipStanja.INITSTATE);
+		st.setStanjeId(st.getNazivStanja() + st.getTipStanja());
+		String []pod = {st.getStanjeId(), st.getNazivStanja(), st.getTipStanja().toString()};
+		dmS.insertRow(states.getSelectedRow(), pod);
+		dmS.removeRow(states.getSelectedRow());
 	}
 	
 	private void SelectState()
@@ -184,10 +239,12 @@ public class StateTransitonWindow extends JFrame {
         btnDelete.setText("Delete State");
         btnEdit.setEnabled(true);
         btnEdit.setText("Edit State");
+        btnPostaviInit.setEnabled(true);
 	}
 	
 	private void SelectTransiton()
 	{
+		btnPostaviInit.setEnabled(false);
 		states.clearSelection();
 		 btnDelete.setEnabled(true);
 		 btnDelete.setText("Delete Transiton");
@@ -695,11 +752,7 @@ public class StateTransitonWindow extends JFrame {
 				}
 			}
 			
-			//MainTest.data.getTranzicija().add(tr);
 			
-			//String []pod = {tr.getNaziv(), from.getNazivStanja(),fail.getNazivStanja(), succes.getNazivStanja()};
-			//dmTr.addRow(pod);
-			//transitons.setRowSelectionInterval(transitons.getRowCount() - 1, transitons.getRowCount() - 1);
 			
 		}
 	}
