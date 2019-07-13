@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -27,9 +28,13 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import enums.TipStanja;
+import enums.VrstaAkcije;
 import gui.popUps.EditComp;
 import gui.popUps.NewCompChoice;
 import main.MainTest;
+import model.Akcija;
+import model.State;
+import model.Tranzicija;
 import model.komponente.Komponenta;
 
 public class StateTransitonWindow extends JFrame {
@@ -113,8 +118,8 @@ public class StateTransitonWindow extends JFrame {
 		JLabel lblSt = new JLabel("States");
 		statePanel.add(lblSt, BorderLayout.NORTH);
 		String []headerState = {"ID", "Naziv", "Tip"};
-		String [][] podaci = {{"nesto", "radi"}};
-		dmS = new DefaultTableModel(podaci,headerState);
+		//String [][] podaci = {{"nesto", "radi"}};
+		dmS = new DefaultTableModel(null,headerState);
 		states = new JTable(dmS){
 		    @Override
 		    public boolean isCellEditable(int row, int column) {                
@@ -138,8 +143,8 @@ public class StateTransitonWindow extends JFrame {
 		transitonPanel.setLayout(new BorderLayout());
 		JLabel lblTr = new JLabel("Transitons");
 		transitonPanel.add(lblTr, BorderLayout.NORTH);
-		String []headerTransiton = {"ID", "Naziv", "From", "To"};
-		dmTr = new DefaultTableModel(podaci,headerTransiton);
+		String []headerTransiton = {"Naziv", "From", "Fail", "Succes"};
+		dmTr = new DefaultTableModel(null,headerTransiton);
 		transitons = new JTable(dmTr){
 		    @Override
 		    public boolean isCellEditable(int row, int column) {                
@@ -199,7 +204,29 @@ public class StateTransitonWindow extends JFrame {
 		}
 		else if(result == 2)
 			return;
-		System.out.println(result);
+		for(State s : MainTest.data.getStanje())
+		{
+			if(s.getNazivStanja().equals(tf.getText()))
+			{
+				JOptionPane.showMessageDialog(null, "Naziv stanja vec postoji", "Error", JOptionPane.ERROR_MESSAGE);
+				AddState();
+				return;
+			}
+		}
+		TipStanja ts = TipStanja.values()[cb.getSelectedIndex()]; 
+		if(ts == TipStanja.INITSTATE)
+		{
+			for(State s : MainTest.data.getStanje())
+			{
+				if(s.getTipStanja() == TipStanja.INITSTATE)
+				{
+					JOptionPane.showMessageDialog(null, "Ne mozes dodati vise od jednog INITSTATE", "Error", JOptionPane.ERROR_MESSAGE);
+					AddState();
+					return;
+				}
+			}
+		}
+		//System.out.println(result);
 		String []podaciAkcije = {"Enabled", "Disabled"};
 		JComponent[] inputs2 = new JComponent[8];
 		inputs2[0] = new JLabel("Save");
@@ -223,10 +250,19 @@ public class StateTransitonWindow extends JFrame {
 		result = JOptionPane.showOptionDialog(null, inputs2, "Moguce akcije", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,null, null,null);
 		if(result == 2)
 			return;
+		ArrayList<Akcija> akcije = new ArrayList<Akcija>();
+		for(int i = 0, j = 0; i + j < 8; i ++, j++)
+		{
+			if(((JComboBox)inputs2[i + j + 1]).getSelectedIndex() == 0)
+			{
+				Akcija a = new Akcija(VrstaAkcije.values()[i]);
+				akcije.add(a);
+			}
+		}
 		String []podaciKomponente = {"Mandatory", "Delete", "Hide"};
 		ArrayList<Komponenta> lista = MainTest.data.getDokument().getKomponente();
 		int n = 2 * lista.size();
-		System.out.println(n);
+		//System.out.println(n);
 		JComponent[] inputs3 = new JComponent[n];
 		for(int i = 0, j = 0; i + j < n; i ++, j++)
 		{
@@ -239,28 +275,175 @@ public class StateTransitonWindow extends JFrame {
 		String id =  tf.getText() + cb.getSelectedItem();
 		String []pod = {id, tf.getText(), cb.getSelectedItem().toString()};
 		dmS.addRow(pod);
+		states.setRowSelectionInterval(states.getRowCount() - 1, states.getRowCount() - 1);
+		SelectState();
+		State st = new State(ts, tf.getText());
+		st.setAkcije(akcije);
+		for(int i = 0, j = 0; i + j < n; i ++, j++)
+		{
+			if(((JComboBox)inputs3[i + j + 1]).getSelectedIndex() == 0)
+			{
+				st.getMandatory_list().add(lista.get(i));
+			}
+			else if(((JComboBox)inputs3[i + j + 1]).getSelectedIndex() == 1)
+			{
+				st.getDelete_list().add(lista.get(i));
+			}
+			else
+			{
+				st.getHide_list().add(lista.get(i));
+			}
+		}
+		MainTest.data.getStanje().add(st);
 	}
 	
 	private void AddTransiton()
 	{
-		JComponent[] inputs = new JComponent[6];
+		JComponent[] inputs = new JComponent[8];
 		inputs[0] = new JLabel("Naziv");
 		inputs[1] = new JTextField();
-		inputs[2] = new JLabel("From State");
-		inputs[3] = new JComboBox<String>();
-		inputs[4] = new JLabel("To State");
-		inputs[5] = new JComboBox<String>();
+		inputs[2] = new JLabel("Fail State");
+		int vel = MainTest.data.getStanje().size();
+		String []podFail = new String[vel];
+		for(int i = 0; i < vel; i++)
+		{
+			podFail[i] = MainTest.data.getStanje().get(i).getNazivStanja();
+		}
+		inputs[3] = new JComboBox<String>(new DefaultComboBoxModel<String>(podFail));
+		inputs[4] = new JLabel("Succes State");
+		String []podSucces = new String[vel];
+		for(int i = 0; i < vel; i++)
+		{
+			podSucces[i] = MainTest.data.getStanje().get(i).getNazivStanja();
+		}
+		inputs[5] = new JComboBox<String>(new DefaultComboBoxModel<String>(podSucces));
+		
+		inputs[6] = new JLabel("From State");
+		String []podFrom = new String[vel];
+		for(int i = 0; i < vel; i++)
+		{
+			if(MainTest.data.getStanje().get(i).getAkcije().size() > MainTest.data.getStanje().get(i).getTranzicija().size())
+				podFrom[i] = MainTest.data.getStanje().get(i).getNazivStanja();
+		}
+		inputs[7] = new JComboBox<String>(new DefaultComboBoxModel<String>(podFrom));
+		
+		
+		
 		int result = JOptionPane.showOptionDialog(null, inputs, "My custom dialog", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,null, null,null);
+		if(result == 2)
+			return;
+		if(((JComboBox)inputs[3]).getSelectedIndex() == -1)
+		{
+			JOptionPane.showMessageDialog(null, "Morate imati stanja da bi dodali tranziciju", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
+		if(((JComboBox)inputs[7]).getSelectedIndex() == -1)
+		{
+			JOptionPane.showMessageDialog(null, "Sve tranzicije su kreirane", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
+		if(((JTextField)inputs[1]).getText().equals(""))
+		{
+			JOptionPane.showMessageDialog(null, "Ne moze se dodati tranzicija bez naziva", "Error", JOptionPane.ERROR_MESSAGE);
+			AddTransiton();
+			return;
+		}
+		
+		for(Tranzicija tr : MainTest.data.getTranzicija())
+		{
+			if(tr.getNaziv().equals(((JTextField)inputs[1]).getText()))
+			{
+				JOptionPane.showMessageDialog(null, "Naziv tranzicije vec postoji", "Error", JOptionPane.ERROR_MESSAGE);
+				AddTransiton();
+				return;
+			}
+		}
+		State fail = MainTest.data.getStanje().get(((JComboBox)inputs[3]).getSelectedIndex());
+		State succes = MainTest.data.getStanje().get(((JComboBox)inputs[5]).getSelectedIndex());
+		State from = new State();
+		for(State s : MainTest.data.getStanje())
+		{
+			if(s.getNazivStanja().equals(((JComboBox)inputs[7]).getSelectedItem()))
+			{
+				from = s;
+			}
+		}
+		
+		
+		Tranzicija tr = new Tranzicija(fail, succes, ((JTextField)inputs[1]).getText());
+		
+		JComponent[] inputs2 = new JComponent[2];
+		inputs2[0] = new JLabel("Dozvoljene Akcije");
+		int velA = MainTest.data.getStanje().get(((JComboBox)inputs[7]).getSelectedIndex()).getAkcije().size();
+		String []podAkcije = new String[velA];
+		for(int i = 0; i < velA; i++)
+		{
+			Akcija a = MainTest.data.getStanje().get(((JComboBox)inputs[7]).getSelectedIndex()).getAkcije().get(i);
+			if(!MainTest.data.getStanje().get(((JComboBox)inputs[7]).getSelectedIndex()).getTranzicija().containsKey(a))
+				podAkcije[i] = a.getVrsta().toString();
+		}
+		inputs2[1] = new JComboBox<String>(new DefaultComboBoxModel<String>(podAkcije));
+		result = JOptionPane.showOptionDialog(null, inputs2, "My custom dialog", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,null, null,null);
+		if(result == 2)
+			return;
+		for(Akcija a : from.getAkcije())
+		{
+			
+			if(a.getVrsta().toString().equals(((JComboBox)inputs2[1]).getSelectedItem()))
+			{
+				from.getTranzicija().put(a, tr);
+				
+			}
+		}
+		
+		MainTest.data.getTranzicija().add(tr);
+		
+		String []pod = {tr.getNaziv(), from.getNazivStanja(),fail.getNazivStanja(), succes.getNazivStanja()};
+		dmTr.addRow(pod);
+		transitons.setRowSelectionInterval(transitons.getRowCount() - 1, transitons.getRowCount() - 1);
+		SelectTransiton();
+		
 	}
 	
 	private void Delete()
 	{
 		if(states.getSelectedRow() != -1)
 		{
+			ArrayList<Tranzicija> listTr = new ArrayList<Tranzicija>();
+			for (Map.Entry<Akcija, Tranzicija> mapEntry : MainTest.data.getStanje().get(states.getSelectedRow()).getTranzicija().entrySet()) {
+				listTr.add(mapEntry.getValue());
+			}
+			
+			
+			
+			//ArrayList<Tranzicija> listTr = MainTest.data.getStanje().get(states.getSelectedRow()).getTranzicija().values()
+			
+			MainTest.data.getStanje().remove(states.getSelectedRow());
 			dmS.removeRow(states.getSelectedRow());
+
+			for(Tranzicija tranBris : listTr)
+			{
+				int i = 0;
+				for(Tranzicija el : MainTest.data.getTranzicija())
+				{
+					
+					if(el.getNaziv().equals(tranBris.getNaziv()))
+					{
+						MainTest.data.getTranzicija().remove(el);
+						dmTr.removeRow(i);
+						break;
+					}
+					i++;
+				}
+			}
+			
+			
 		}
 		else if(transitons.getSelectedRow() != -1)
 		{
+			MainTest.data.getTranzicija().remove(transitons.getSelectedRow());
 			dmTr.removeRow(transitons.getSelectedRow());
 		}
 	}

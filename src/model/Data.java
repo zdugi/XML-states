@@ -1,13 +1,17 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Data {
-	//public java.util.Collection<Tranzicija> tranzicija;
-	//public java.util.Collection<Stanje> stanje;
-	public Dokument dokument;
+	private ArrayList<Tranzicija> tranzicija;
+	private ArrayList<State> stanje;
+	private Dokument dokument;
 	
 	public Data()
 	{
 		dokument = new Dokument();
+		stanje = new ArrayList<State>();
+		tranzicija = new ArrayList<Tranzicija>();
 	}
 
 	public Dokument getDokument() {
@@ -17,6 +21,23 @@ public class Data {
 	public void setDokument(Dokument dokument) {
 		this.dokument = dokument;
 	}
+
+	public ArrayList<Tranzicija> getTranzicija() {
+		return tranzicija;
+	}
+
+	public void setTranzicija(ArrayList<Tranzicija> tranzicija) {
+		this.tranzicija = tranzicija;
+	}
+
+	public ArrayList<State> getStanje() {
+		return stanje;
+	}
+
+	public void setStanje(ArrayList<State> stanje) {
+		this.stanje = stanje;
+	}
+	
 	
 	
 }
