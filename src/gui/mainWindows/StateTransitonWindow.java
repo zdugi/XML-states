@@ -31,6 +31,7 @@ import enums.TipStanja;
 import enums.VrstaAkcije;
 import gui.popUps.EditComp;
 import gui.popUps.NewCompChoice;
+import main.CreateXML;
 import main.MainTest;
 import model.Akcija;
 import model.State;
@@ -108,6 +109,14 @@ public class StateTransitonWindow extends JFrame {
 		});
 		btnDelete.setEnabled(false);
 		toolBar.add(btnDelete);
+		
+		JButton btnUpisiUFajl = new JButton("Upisi u fajl");
+		btnUpisiUFajl.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				CreateXML.writeToXML();
+			}
+		});
+		toolBar.add(btnUpisiUFajl);
 		
 		tabelPanel = new JPanel();
 		getContentPane().add(tabelPanel, BorderLayout.WEST);

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<data>
+    <Document>
+        <Title/>
+        <Fields>
+            <Field fieldId="dTEXTFIELD" type="TEXTFIELD">
+                <Name>d</Name>
+            </Field>
+            <Field fieldId="aTEXTFIELD" type="TEXTFIELD">
+                <Name>a</Name>
+            </Field>
+        </Fields>
+        <Actions>
+            <Action actionId="0">
+                <Name>SAVE</Name>
+            </Action>
+            <Action actionId="1">
+                <Name>SUBMIT</Name>
+            </Action>
+            <Action actionId="2">
+                <Name>REJECT</Name>
+            </Action>
+            <Action actionId="3">
+                <Name>ARCHIVE</Name>
+            </Action>
+        </Actions>
+    </Document>
+    <States>
+        <State stateId="21321INITSTATE">
+            <Statetype>INITSTATE</Statetype>
+            <Mandatory>dTEXTFIELD</Mandatory>
+            <Mandatory>aTEXTFIELD</Mandatory>
+            <Transitions>
+                <Transition transitionID="vv" triggerAction="0"/>
+                <Transition transitionID="bb" triggerAction="3"/>
+            </Transitions>
+        </State>
+        <State stateId="cxzREJECTEDSTATE">
+            <Statetype>REJECTEDSTATE</Statetype>
+            <Mandatory>dTEXTFIELD</Mandatory>
+            <Mandatory>aTEXTFIELD</Mandatory>
+            <Transitions/>
+        </State>
+    </States>
+    <Transitions>
+        <Transition transitionID="vv">
+            <Success stateID="21321INITSTATE"/>
+            <Fail stateID="21321INITSTATE"/>
+        </Transition>
+        <Transition transitionID="bb">
+            <Success stateID="21321INITSTATE"/>
+            <Fail stateID="21321INITSTATE"/>
+        </Transition>
+    </Transitions>
+</data>

@@ -23,6 +23,7 @@ import javax.swing.JToolBar;
 
 import gui.popUps.EditComp;
 import gui.popUps.NewCompChoice;
+import main.CreateXML;
 import main.MainTest;
 import model.Data;
 import model.komponente.GroupKomponenta;

@@ -8,11 +8,14 @@ public class Dokument {
 	
 	private String title;   
 	public ArrayList<Komponenta> komponente;
+	//public ArrayList<Akcija> akcije;
 	
 	public Dokument()
 	{
 		komponente = new ArrayList<Komponenta>();
 		this.title = "Default name";
+		//akcije = new ArrayList<Akcija>();
+		//akcije.add(new Akcija())
 	}
 	
 	public String getTitle() {
