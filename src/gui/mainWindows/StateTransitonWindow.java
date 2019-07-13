@@ -202,7 +202,7 @@ public class StateTransitonWindow extends JFrame {
 			AddState();
 			return;
 		}
-		else if(result == 2)
+		else if(result != 0)
 			return;
 		for(State s : MainTest.data.getStanje())
 		{
@@ -248,7 +248,7 @@ public class StateTransitonWindow extends JFrame {
 		
 		
 		result = JOptionPane.showOptionDialog(null, inputs2, "Moguce akcije", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,null, null,null);
-		if(result == 2)
+		if(result != 0)
 			return;
 		ArrayList<Akcija> akcije = new ArrayList<Akcija>();
 		for(int i = 0, j = 0; i + j < 8; i ++, j++)
@@ -270,7 +270,7 @@ public class StateTransitonWindow extends JFrame {
 			inputs3[i + j + 1] = new JComboBox<String>(new DefaultComboBoxModel<String>(podaciKomponente));
 		}
 		result = JOptionPane.showOptionDialog(null, inputs3, "Stanje Komponenti", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,null, null,null);
-		if(result == 2)
+		if(result != 0)
 			return;
 		String id =  tf.getText() + cb.getSelectedItem();
 		String []pod = {id, tf.getText(), cb.getSelectedItem().toString()};
@@ -330,7 +330,7 @@ public class StateTransitonWindow extends JFrame {
 		
 		
 		int result = JOptionPane.showOptionDialog(null, inputs, "My custom dialog", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,null, null,null);
-		if(result == 2)
+		if(result != 0)
 			return;
 		if(((JComboBox)inputs[3]).getSelectedIndex() == -1)
 		{
@@ -340,7 +340,7 @@ public class StateTransitonWindow extends JFrame {
 		
 		if(((JComboBox)inputs[7]).getSelectedIndex() == -1)
 		{
-			JOptionPane.showMessageDialog(null, "Sve tranzicije su kreirane", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Ne postojece stanje", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		
@@ -386,8 +386,13 @@ public class StateTransitonWindow extends JFrame {
 		}
 		inputs2[1] = new JComboBox<String>(new DefaultComboBoxModel<String>(podAkcije));
 		result = JOptionPane.showOptionDialog(null, inputs2, "My custom dialog", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,null, null,null);
-		if(result == 2)
+		if(result != 0)
 			return;
+		if(((JComboBox)inputs2[1]).getSelectedIndex() == -1)
+		{
+			JOptionPane.showMessageDialog(null, "Ne postojeca akcija", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 		for(Akcija a : from.getAkcije())
 		{
 			
