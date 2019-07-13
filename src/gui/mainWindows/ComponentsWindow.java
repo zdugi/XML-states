@@ -39,8 +39,8 @@ public class ComponentsWindow extends JFrame{
 	JPanel panelKomponenti;
 	private ArrayList<JPanel> paneli;
 	private Panel selekcija;
-	JButton btnEditComponent;
-	JButton btnDeleteComponent;
+	public JButton btnEditComponent;
+	public JButton btnDeleteComponent;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	
 	public ComponentsWindow(Data data) {
@@ -122,7 +122,7 @@ public class ComponentsWindow extends JFrame{
 		StateTransitonWindow stw = new StateTransitonWindow();
 		stw.setVisible(true);
 	}
-	public void postaviTextField(Komponenta comp)
+	public TextField postaviTextField(Komponenta comp)
 	{
 		JTextField jTextField = new JTextField(30);
 		jTextField.setEditable(false);
@@ -143,9 +143,10 @@ public class ComponentsWindow extends JFrame{
 		panelKomponenti.add(textField, -1);
 		setSeleckija(textField);
 		panelKomponenti.revalidate();
+		return textField;
 	}
 	
-	public void postaviSpinner(SpinnerKomponenta comp)
+	public Spinner postaviSpinner(SpinnerKomponenta comp)
 	{
 		JSpinner jSpinner = new JSpinner();
 		jSpinner.setEnabled(false);
@@ -166,9 +167,11 @@ public class ComponentsWindow extends JFrame{
 		panelKomponenti.add(spinner, -1);
 		setSeleckija(spinner);
 		panelKomponenti.revalidate();
+		
+		return spinner;
 	}
 	
-	public void postaviCheckboxGroup(GroupKomponenta comp)
+	public CheckBoxGroup postaviCheckboxGroup(GroupKomponenta comp)
 	{
 		ButtonGroup group = new ButtonGroup();
 		CheckBoxGroup checkBox = new CheckBoxGroup(comp, group);
@@ -182,9 +185,11 @@ public class ComponentsWindow extends JFrame{
 		panelKomponenti.add(checkBox, -1);
 		setSeleckija(checkBox);
 		panelKomponenti.revalidate();
+		
+		return checkBox;
 	}
 	
-	public void postaviRadioButtonGroup(GroupKomponenta comp)
+	public RadioButtonGroup postaviRadioButtonGroup(GroupKomponenta comp)
 	{
 		ButtonGroup group = new ButtonGroup();
 		RadioButtonGroup radioGroup = new RadioButtonGroup(comp, group);
@@ -198,6 +203,8 @@ public class ComponentsWindow extends JFrame{
 		panelKomponenti.add(radioGroup, -1);
 		setSeleckija(radioGroup);
 		panelKomponenti.revalidate();
+		
+		return radioGroup;
 	}
 
 	public void setSeleckija(Panel panel) {
