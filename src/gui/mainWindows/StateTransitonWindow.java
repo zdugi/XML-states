@@ -483,6 +483,11 @@ public class StateTransitonWindow extends JFrame {
 	{
 		if(states.getSelectedRow() != -1)
 		{
+			if(MainTest.data.getStanje().get(states.getSelectedRow()).getTipStanja() == TipStanja.INITSTATE)
+			{
+				JOptionPane.showMessageDialog(null, "Init state se ne moze brisati", "Error", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 			ArrayList<Tranzicija> listTr = new ArrayList<Tranzicija>();
 			for (Map.Entry<Akcija, Tranzicija> mapEntry : MainTest.data.getStanje().get(states.getSelectedRow()).getTranzicija().entrySet()) {
 				listTr.add(mapEntry.getValue());
