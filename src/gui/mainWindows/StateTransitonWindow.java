@@ -40,15 +40,15 @@ import model.komponente.Komponenta;
 
 public class StateTransitonWindow extends JFrame {
 	
-	JButton btnEdit;
-	JButton btnDelete;
-	JButton btnPostaviInit;
-	JPanel tabelPanel;
-	JPanel grafPanel;
-	JTable states;
-	JTable transitons;
-	DefaultTableModel dmS;
-	DefaultTableModel dmTr;
+	public JButton btnEdit;
+	public JButton btnDelete;
+	public JButton btnPostaviInit;
+	private JPanel tabelPanel;
+	private JPanel grafPanel;
+	public JTable states;
+	public JTable transitons;
+	public DefaultTableModel dmS;
+	public DefaultTableModel dmTr;
 	
 	public StateTransitonWindow()
 	{
@@ -189,7 +189,7 @@ public class StateTransitonWindow extends JFrame {
 		getContentPane().add(grafPanel, BorderLayout.CENTER);*/
 	}
 	
-	private void PostaviInit()
+	public void PostaviInit()
 	{
 		State st = MainTest.data.getStanje().get(states.getSelectedRow());
 		JComponent[] inputs2 = new JComponent[2];
@@ -232,7 +232,7 @@ public class StateTransitonWindow extends JFrame {
 		dmS.removeRow(states.getSelectedRow());
 	}
 	
-	private void SelectState()
+	public void SelectState()
 	{
         transitons.clearSelection();
         btnDelete.setEnabled(true);
@@ -242,7 +242,7 @@ public class StateTransitonWindow extends JFrame {
         btnPostaviInit.setEnabled(true);
 	}
 	
-	private void SelectTransiton()
+	public void SelectTransiton()
 	{
 		btnPostaviInit.setEnabled(false);
 		states.clearSelection();
@@ -252,7 +252,7 @@ public class StateTransitonWindow extends JFrame {
 	     btnEdit.setText("Edit Transiton");
 	}
 	
-	private void AddState()
+	public void AddState()
 	{
 		JComponent[] inputs = new JComponent[4];
 		inputs[0] = new JLabel("Naziv");
@@ -364,7 +364,7 @@ public class StateTransitonWindow extends JFrame {
 		MainTest.data.getStanje().add(st);
 	}
 	
-	private void AddTransiton()
+	public void AddTransiton()
 	{
 		JComponent[] inputs = new JComponent[8];
 		inputs[0] = new JLabel("Naziv");
@@ -479,7 +479,7 @@ public class StateTransitonWindow extends JFrame {
 		
 	}
 	
-	private void Delete()
+	public void Delete()
 	{
 		if(states.getSelectedRow() != -1)
 		{
@@ -537,7 +537,7 @@ public class StateTransitonWindow extends JFrame {
 		}
 	}
 	
-	private void Edit()
+	public void Edit()
 	{
 		if(states.getSelectedRow() != -1)
 		{
