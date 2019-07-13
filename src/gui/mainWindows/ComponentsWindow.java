@@ -13,7 +13,9 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -23,6 +25,7 @@ import gui.popUps.EditComp;
 import gui.popUps.NewCompChoice;
 import main.MainTest;
 import model.Data;
+import model.komponente.GroupKomponenta;
 import model.komponente.Komponenta;
 import model.komponente.SpinnerKomponenta;
 import paneli.CheckBoxGroup;
@@ -100,7 +103,13 @@ public class ComponentsWindow extends JFrame{
 		btnSaveAndNext.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					nextProzor();
+					if(MainTest.data.getDokument().getKomponente().size() != 0)
+						nextProzor();
+					else
+						JOptionPane.showMessageDialog(new JDialog(),
+							    "Mora se dodati bar jenda komponenta",
+							    "Add failure",
+							    JOptionPane.ERROR_MESSAGE);
 				}
 		});
 		panelNastavka.add(btnSaveAndNext);
@@ -158,7 +167,7 @@ public class ComponentsWindow extends JFrame{
 		panelKomponenti.revalidate();
 	}
 	
-	public void postaviCheckboxGroup(Komponenta comp)
+	public void postaviCheckboxGroup(GroupKomponenta comp)
 	{
 		ButtonGroup group = new ButtonGroup();
 		CheckBoxGroup checkBox = new CheckBoxGroup(comp, group);
@@ -174,7 +183,7 @@ public class ComponentsWindow extends JFrame{
 		panelKomponenti.revalidate();
 	}
 	
-	public void postaviRadioButtonGroup(Komponenta comp)
+	public void postaviRadioButtonGroup(GroupKomponenta comp)
 	{
 		ButtonGroup group = new ButtonGroup();
 		RadioButtonGroup radioGroup = new RadioButtonGroup(comp, group);
@@ -216,8 +225,18 @@ public class ComponentsWindow extends JFrame{
 	public void obrisi()
 	{
 		panelKomponenti.remove(selekcija);
+		Komponenta pom = null;
+		for(Komponenta k : MainTest.data.getDokument().getKomponente())
+		{
+			if(k.getKomponentaId().equals(selekcija.getKomponenta().getKomponentaId()))
+			{
+				pom = k;
+				break;
+			}		
+		}
+		MainTest.data.getDokument().getKomponente().remove(pom);
+		setSeleckija(null);
 		panelKomponenti.revalidate();
 		panelKomponenti.repaint();
-		setSeleckija(null);
 	}
 }

@@ -9,7 +9,7 @@ public class SpinnerKomponenta extends Komponenta {
 	
 	 public SpinnerKomponenta(String naziv, VrstaKomponente tip, int gornjaGranica, int donjaGranica)
 	 {
-		 super(naziv);
+		 super(naziv, tip);
 		 this.gornjaGranica = gornjaGranica;
 		 this.donjaGranica = donjaGranica;
 	 }

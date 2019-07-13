@@ -11,6 +11,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,6 +23,7 @@ import javax.swing.event.ListSelectionListener;
 import enums.VrstaKomponente;
 import enums.VrstaPodkomponente;
 import gui.mainWindows.ComponentsWindow;
+import main.MainTest;
 import model.komponente.Komponenta;
 import model.komponente.SpinnerKomponenta;
 import paneli.CheckBox;
@@ -37,6 +39,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
 public class EditComp extends JFrame{
@@ -207,21 +210,55 @@ public class EditComp extends JFrame{
 		JButton btnNext = new JButton("Change");
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(textField.getText().equals(""))
+				{
+					JOptionPane.showMessageDialog(new JDialog(),
+						    "Ime komponente ne moze biti prazno",
+						    "Add failure",
+						    JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+					
+				String stariId = panel.getKomponenta().getKomponentaId();
 				
+				String pomId = textField.getText()+panel.getKomponenta().getTip();
+				
+				for(Komponenta k : MainTest.data.getDokument().getKomponente())
+				{
+					if(!stariId.equals(pomId) && k.getKomponentaId().equals(pomId))
+					{
+						JOptionPane.showMessageDialog(new JDialog(),
+							    "Ime komponente svakog tipa mora biti jedinstveno",
+							    "Add failure",
+							    JOptionPane.ERROR_MESSAGE);
+						return;
+					}		
+				}
 				panel.getKomponenta().setNaziv(textField.getText());
-				
-				
+				panel.getKomponenta().setKomponentaId(pomId);
 				if (panel instanceof Spinner)
 				{
 					try
 					{
+						if(Integer.parseInt(textField_2.getText()) > Integer.parseInt(textField_1.getText()))
+						{
+							JOptionPane.showMessageDialog(new JDialog(),
+								    "Donja granica veca od donje",
+								    "Add failure",
+								    JOptionPane.ERROR_MESSAGE);
+							return;
+						}
 						((SpinnerKomponenta)panel.getKomponenta()).setDonjaGranica(Integer.parseInt(textField_2.getText()));
 						((SpinnerKomponenta)panel.getKomponenta()).setGornjaGranica(Integer.parseInt(textField_1.getText()));
 						((Spinner) panel).setDg();
 						((Spinner) panel).setGg();
 					}catch(NumberFormatException ex)
 					{
-						System.out.println("Losi brojevi");
+						JOptionPane.showMessageDialog(new JDialog(),
+							    "Moraju biti uneti brojevi",
+							    "Edit failure",
+							    JOptionPane.ERROR_MESSAGE);
+						return;
 					}
 				}
 				panel.setNazivLbl();
@@ -314,6 +351,7 @@ public class EditComp extends JFrame{
 		{
 			((RadioButtonGroup)this.panel).DodajRadioButton((RadioButton)panel);
 			listModel.addElement((RadioButton)panel);
+			//System.out.println((((RadioButtonGroup)this.panel).getKomponenta()).getDugmici());
 		}
 		else if (panel instanceof CheckBox)
 		{
